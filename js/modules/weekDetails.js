@@ -19,9 +19,20 @@ export function openWeek(id) {
 
         html += "<ul>";
 
-        week.lessons.forEach(lesson => {
+        week.lessons.forEach((lesson, index) => {
 
-            html += `<li>${lesson.completed ? "✅" : "⬜"} ${lesson.title}</li>`;
+            html += `
+                <li>
+                    <label>
+                        <input
+                            type="checkbox"
+                            ${lesson.completed ? "checked" : ""}
+                            onchange="toggleLesson(${week.id}, ${index})"
+                        >
+                        ${lesson.title}
+                    </label>
+                </li>
+            `;
 
         });
 
@@ -35,4 +46,12 @@ export function openWeek(id) {
 
 window.closeModal = function () {
     document.getElementById("modal").classList.add("hidden");
+};
+
+/*
+ * سيتم تنفيذها في الخطوة القادمة
+ * حالياً فقط حتى لا يظهر خطأ عند الضغط على Checkbox
+ */
+window.toggleLesson = function (weekId, lessonIndex) {
+    console.log("Week:", weekId, "Lesson:", lessonIndex);
 };
