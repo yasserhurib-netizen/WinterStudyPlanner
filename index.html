@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Winter Study Planner</title>
+    <title>Winter Study Planner 2027</title>
 
     <link rel="stylesheet" href="css/core.css">
     <link rel="stylesheet" href="css/layout.css">
@@ -14,7 +14,9 @@
     <link rel="stylesheet" href="css/modal.css">
 
     <style>
-        /* التنسيقات الفورية لإصلاح تعارض المودال والجدول ومنع التداخل البصري */
+        /* التنسيقات الفورية لضمان التوافقية الكاملة ومنع التداخل البصري */
+        * { box-sizing: border-box; }
+        
         .modal {
             display: none; 
             position: fixed;
@@ -35,18 +37,19 @@
             padding: 25px;
             border-radius: 14px;
             width: 95%;
-            max-width: 1150px; /* عرض واسع ومريح لفرد جدول المواد أفقياً */
+            max-width: 1150px; /* مريح لفرد جدول المواد أفقياً */
             color: #1e293b;
             position: relative;
             direction: rtl;
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            text-align: right;
         }
         
         .hidden {
             display: none !important;
         }
         
-        .close {
+        .close-btn {
             position: absolute;
             top: 15px;
             left: 20px;
@@ -58,11 +61,20 @@
             line-height: 1;
         }
         
-        .close:hover {
+        .close-btn:hover {
             color: #ef4444;
         }
+
+        .modal-title {
+            font-size: 22px;
+            color: #1e3a8a;
+            border-bottom: 3px solid #4f46e5;
+            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
         
-        /* تنسيق الجداول التفاعلية داخل المودال */
+        /* تنسيق الجداول التفاعلية */
         .table-responsive {
             width: 100%;
             overflow-x: auto;
@@ -73,6 +85,7 @@
             width: 100%;
             border-collapse: separate;
             border-spacing: 8px;
+            min-width: 900px;
         }
         
         th {
@@ -84,6 +97,12 @@
             border-radius: 6px;
         }
         
+        td {
+            padding: 8px;
+            vertical-align: top;
+            width: 22%;
+        }
+
         .day-column {
             background: #e2e8f0 !important;
             color: #1e293b !important;
@@ -92,7 +111,7 @@
             vertical-align: middle;
             border-radius: 6px;
             padding: 10px;
-            min-width: 100px;
+            width: 12%;
         }
         
         /* كروت المواد التفاعلية */
@@ -104,7 +123,7 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.05);
             border: 1px solid #e2e8f0;
             text-align: right;
-            min-height: 95px;
+            min-height: 100px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -114,6 +133,10 @@
             font-weight: bold;
             color: #1e3a8a;
             font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
         }
         
         .subject-desc {
@@ -134,6 +157,7 @@
             font-weight: 600;
             align-self: flex-start;
             transition: all 0.2s;
+            margin-top: auto;
         }
         
         .done-toggle-btn:hover {
@@ -141,17 +165,24 @@
             color: #0f172a;
         }
         
-        /* الأنماط التفاعلية عند الضغط وإنجاز المادة */
+        /* الأنماط التفاعلية عند إنجاز المادة */
         .subject-container.is-done {
             border-right-color: #10b981 !important;
             background-color: #f0fdf4 !important;
             border-color: #a7f3d0;
+            box-shadow: none;
         }
         
         .subject-container.is-done .subject-title {
             color: #065f46 !important;
             text-decoration: line-through;
             opacity: 0.7;
+        }
+
+        .subject-container.is-done .subject-desc {
+            color: #15803d;
+            text-decoration: line-through;
+            opacity: 0.8;
         }
         
         .subject-container.is-done .done-toggle-btn {
@@ -160,15 +191,15 @@
             border-color: #10b981 !important;
         }
         
-        tr.test-day { background-color: #fff7ed !important; }
-        tr.review-day { background-color: #f0fdf4 !important; }
+        .test-day .day-column { background-color: #fee2e2 !important; color: #991b1b !important; }
+        .review-day .day-column { background-color: #dcfce7 !important; color: #166534 !important; }
     </style>
 </head>
 <body>
 
 <div id="app">
     <aside class="sidebar">
-        <div class="brand">🎓 Winter Study Planner</div>
+        <div class="brand">🎓 Winter Planner 2027</div>
         <div class="nav">
             <button class="active">🏠 Dashboard</button>
             <button>📚 Lessons</button>
@@ -180,215 +211,132 @@
 
     <main class="main">
         <div class="topbar">
-            <h2>Dashboard</h2>
+            <h2>Dashboard - الخطة الدراسية الشتوية</h2>
             <input type="text" placeholder="Search lessons..." class="search">
             <button onclick="toggleTheme()">🌙</button>
         </div>
 
         <section class="grid grid-4" id="stats">
-            </section>
+            <div class="card">📚 أسابيع الخطة: 27 أسبوعاً</div>
+            <div class="card">📖 الخطة المستهدفة: الصف التاسع</div>
+            <div class="card">📊 حالة التتبع: مدمج ومحمي</div>
+            <div class="card">⚡ التخزين: تلقائي (LocalStorage)</div>
+        </section>
 
         <section class="card">
-            <h3>Overall Progress</h3>
+            <h3>Overall Progress | نسبة الإنجاز العام للمنهج</h3>
             <div class="progress" style="background: #e2e8f0; border-radius: 10px; overflow: hidden; height: 20px; margin-top: 10px;">
                 <div id="progress-bar" style="width: 0%; height: 100%; background: linear-gradient(135deg, #4f46e5, #2563eb); color: white; text-align: center; font-size: 12px; line-height: 20px; transition: width 0.4s;">0%</div>
             </div>
         </section>
 
-        <section class="grid grid-3" id="weeks-container">
-            </section>
+        <section class="card">
+            <h3>📅 انقر على أي أسبوع لعرض جدول المناهج والدروس بالتفصيل:</h3>
+            <div class="buttons-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; margin-top: 15px;">
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer;" onclick="openModal('week-1')">📅 الأسبوع الأول</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer;" onclick="openModal('week-2')">📅 الأسبوع الثاني</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer;" onclick="openModal('week-3')">📅 الأسبوع الثالث</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer;" onclick="openModal('week-4')">📅 الأسبوع الرابع</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer;" onclick="openModal('week-5')">📅 الأسبوع الخامس</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer; background: #eef2ff;" onclick="openModal('week-6')">📅 أسبوع المراجعة الشاملة (1)</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer;" onclick="openModal('week-7')">📅 الأسبوع السابع</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer;" onclick="openModal('week-8')">📅 الأسبوع الثامن</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer;" onclick="openModal('week-9')">📅 الأسبوع التاسع</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer;" onclick="openModal('week-10')">📅 الأسبوع العاشر</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer; background: #eef2ff;" onclick="openModal('week-11')">📅 أسبوع اختبارات الوحدة (2)</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer;" onclick="openModal('week-12')">📅 الأسبوع الثاني عشر</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer;" onclick="openModal('week-13')">📅 الأسبوع الثالث عشر</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer;" onclick="openModal('week-14')">📅 الأسبوع الرابع عشر</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer; background: #fef2f2; color: #991b1b;" onclick="openModal('week-15')">📅 الامتحانات النصفية التجريبية</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer; background: #f0fdf4; color: #166534;" onclick="openModal('week-16')">📅 عطلة رأس السنة وتنظيم الملفات</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer;" onclick="openModal('week-18')">📅 الأسبوع السابع عشر</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer;" onclick="openModal('week-19')">📅 الأسبوع الثامن عشر</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer;" onclick="openModal('week-20')">📅 الأسبوع التاسع عشر</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer;" onclick="openModal('week-21')">📅 الأسبوع العشرون المدمج</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer;" onclick="openModal('week-22')">📅 الأسبوع الحادي والعشرون</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer;" onclick="openModal('week-23')">📅 الأسبوع الثاني والعشرون</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer;" onclick="openModal('week-24')">📅 الأسبوع الثالث والعشرون</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer;" onclick="openModal('week-25')">📅 الأسبوع الرابع والعشرون المدمج</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer;" onclick="openModal('week-26')">📅 الأسبوع الخامس والعشرون</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer;" onclick="openModal('week-27')">📅 الأسبوع السادس والعشرون</button>
+                <button class="week-btn" style="padding:15px; font-weight:bold; cursor:pointer; background: #fdba74; color: #7c2d12;" onclick="openModal('week-28')">📅 الأسبوع 27 (إغلاق المنهاج)</button>
+            </div>
+        </section>
     </main>
 </div>
 
-<div id="modal" class="modal">
+<div id="week-1" class="modal">
     <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <div id="modal-body"></div>
-    </div>
-</div>
-
-<script>
-    // 1. قاعدة البيانات المبدئية للمشروع (الأسابيع الأولى المعتمدة)
-    const planData = {
-        weeks: [
-            {
-                id: "week-1",
-                title: "الأسبوع الأول",
-                date: "من الثلاثاء 15 أيلول إلى الجمعة 18 أيلول 2026",
-                days: [
-                    {
-                        name: "الثلاثاء 15/09",
-                        lessons: [
-                            { id: "ls_1", subject: "رياضيات (هندسة)", desc: "تأسيس ومفهوم التناسب وخواصه." },
-                            { id: "ls_2", subject: "علوم (فيزياء)", desc: "تأسيس المقادير والواحدات وتحويل الجمل." },
-                            { id: "ls_3", subject: "لغة إنجليزية", desc: "مراجعة تشخيصية وتأسيسية للأزمنة." },
-                            { id: "ls_4", subject: "علوم (أحياء)", desc: "مدخل إلى علم الأحياء والخلية وتركيبها." }
-                        ]
-                    },
-                    {
-                        name: "الأربعاء 16/09",
-                        lessons: [
-                            { id: "ls_5", subject: "لغة إنجليزية مراجعة", desc: "قواعد تركيب الجملة وتشكيل السؤال." },
-                            { id: "ls_6", subject: "علوم (كيمياء)", desc: "الرموز الكيميائية والتكافؤات والصيغ." },
-                            { id: "ls_7", subject: "لغة عربية", desc: "مراجعة المرفوعات والمنصوبات والمجرورات." },
-                            { id: "ls_8", subject: "جغرافيا", desc: "مهارة قراءة المصور وتحديد الجهات والرموز." }
-                        ]
-                    },
-                    {
-                        name: "الخميس 17/09",
-                        type: "test-day",
-                        lessons: [
-                            { id: "ls_9", subject: "رياضيات (اختبار)", desc: "📝 اختبار تشخيصي في العمليات الحسابية." },
-                            { id: "ls_10", subject: "اختبار اجتماعية", desc: "📝 اختبار مهارة الخطوط الزمنية والخرائط." },
-                            { id: "ls_11", subject: "اختبار عربي", desc: "📝 اختبار تشخيصي في الإعراب والإملاء." },
-                            { id: "ls_12", subject: "اختبار علوم عامة", desc: "📝 اختبار تشخيصي في المفاهيم العلمية." }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: "week-2",
-                title: "الأسبوع الثاني",
-                date: "من السبت 19 أيلول إلى الجمعة 25 أيلول 2026",
-                days: [
-                    {
-                        name: "السبت 19/09",
-                        lessons: [
-                            { id: "ls_13", subject: "رياضيات (جبر)", desc: "و1 - د1: الأعداد النسبية واللانسبية." },
-                            { id: "ls_14", subject: "لغة عربية (نصوص)", desc: "استماع (عازفات مريمين) وقراءة النافورة." },
-                            { id: "ls_15", subject: "تاريخ", desc: "و1 - د1: الغزو العثماني للبلاد العربية." }
-                        ]
-                    }
-                ]
-            }
-        ]
-    };
-
-    const STORAGE_KEY = 'winter_planner_progress_2026';
-
-    // وظيفية استرجاع وحفظ البيانات التلقائية في ذاكرة المتصفح المحلية
-    function getProgress() { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-    function saveProgress(progress) { localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }
-
-    // تحديث الإحصائيات العامة وشريط التقدم في لوحة التحكم
-    function updateDashboardStats() {
-        const progress = getProgress();
-        let totalLessonsCount = 0;
-        let totalTestsCount = 0;
-
-        planData.weeks.forEach(w => w.days.forEach(d => {
-            totalLessonsCount += d.lessons.length;
-            if(d.type === 'test-day') totalTestsCount += d.lessons.length;
-        }));
-
-        const completedCount = progress.filter(id => id.startsWith('ls_')).length;
-        const percent = totalLessonsCount > 0 ? Math.round((completedCount / totalLessonsCount) * 100) : 0;
-
-        const statsContainer = document.getElementById('stats');
-        if (statsContainer) {
-            statsContainer.innerHTML = `
-                <div class="card">📚 أسابيع الخطة: ${planData.weeks.length}</div>
-                <div class="card">📖 إجمالي الدروس: ${totalLessonsCount}</div>
-                <div class="card">🧪 اختبارات مدمجة: ${totalTestsCount}</div>
-                <div class="card">📊 دروس مـنـجـزة: ${completedCount}</div>
-            `;
-        }
-
-        const progressBar = document.getElementById('progress-bar');
-        if (progressBar) {
-            progressBar.style.width = percent + '%';
-            progressBar.innerText = percent + '%';
-        }
-    }
-
-    // توليد بطاقات الأسابيع وعرضها في حاوية الـ Grid الرئيسية
-    function renderWeeks() {
-        const container = document.getElementById('weeks-container');
-        if (!container) return;
-        container.innerHTML = '';
-
-        planData.weeks.forEach(week => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.innerHTML = `
-                <h3>📅 ${week.title}</h3>
-                <p>${week.date}</p>
-                <button style="padding:6px 12px; background:#4f46e5; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">عرض الجدول</button>
-            `;
-            card.onclick = () => openWeekModal(week);
-            container.appendChild(card);
-        });
-    }
-
-    // بناء الهيكل الأفقي المتناسق لجدول المواد داخل النافذة المنبثقة عند النقر
-    function openWeekModal(week) {
-        const modal = document.getElementById('modal');
-        const progress = getProgress();
-        
-        let tableHTML = `
-            <h2 style="margin-top:0; color:#1e3a8a; font-size:22px; padding-bottom:10px; border-bottom:2px solid #f1f5f9;">📅 ${week.title} (${week.date})</h2>
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>اليوم</th>
-                            <th colspan="4">الحصص والدروس المقررة</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-        `;
-
-        week.days.forEach(day => {
-            tableHTML += `<tr class="${day.type || ''}"><td class="day-column">${day.name}</td>`;
-            
-            day.lessons.forEach(lesson => {
-                const isDone = progress.includes(lesson.id);
-                tableHTML += `
-                    <td>
-                        <div class="subject-container ${isDone ? 'is-done' : ''}" id="card_${lesson.id}">
-                            <div class="subject-title">${lesson.subject}</div>
-                            <div class="subject-desc">${lesson.desc}</div>
-                            <button class="done-toggle-btn" onclick="toggleLessonStatus('${lesson.id}', event)">${isDone ? 'مكتمل ✓' : 'تمت الدراسة'}</button>
-                        </div>
-                    </td>
-                `;
-            });
-
-            // تعبئة الخلايا الفارغة لضمان ثبات التوزيع الأفقي وحماية التصميم
-            for(let i = day.lessons.length; i < 4; i++) {
-                tableHTML += '<td></td>';
-            }
-            tableHTML += '</tr>';
-        });
-
-        tableHTML += '</tbody></table></div>';
-        document.getElementById('modal-body').innerHTML = tableHTML;
-        
-        // فتح المودال برمجياً
-        modal.style.display = 'block';
-    }
-
-    // معالجة تغيير حالة الحصة (مكتمل / تمت الدراسة) وحفظ التحديث فورياً
-    function toggleLessonStatus(id, event) {
-        event.stopPropagation();
-        let progress = getProgress();
-        const card = document.getElementById('card_' + id);
-        const btn = card.querySelector('.done-toggle-btn');
-
-        if(progress.includes(id)) {
-            progress = progress.filter(item => item !== id);
-            card.classList.remove('is-done');
-            btn.innerText = 'تمت الدراسة';
-        } else {
-            progress.push(id);
-            card.classList.add('is-done');
-            btn.innerText = 'مكتمل ✓';
-        }
-        saveProgress(progress);
-        updateDashboardStats();
-    }
-
-    // إغلاق النافذة المنبثقة
-    function closeModal() { document.getElementById('modal').style.display = 'none'; }
-    
-    // إغلاق المودال عند النقر على المساحة المعتمة الخارجية
+        <span class="close-btn" onclick="closeModal('week-1')">&times;</span>
+        <div class="modal-title">📅 الأسبوع الأول: من الثلاثاء 15 أيلول إلى الجمعة 18 أيلول 2026</div>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>اليوم</th>
+                        <th>الحصة الأولى</th>
+                        <th>الحصة الثانية</th>
+                        <th>الحصة الثالثة</th>
+                        <th>الحصة الرابعة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="day-column">الثلاثاء 15/09</td>
+                        <td>
+                            <div class="subject-container" id="card_ls_1">
+                                <div class="subject-title">رياضيات (هندسة)</div>
+                                <div class="subject-desc">تأسيس ومفهوم التناسب وخواصه.</div>
+                                <button class="done-toggle-btn" onclick="toggleLessonProgress('ls_1')">تمت الدراسة</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="subject-container" id="card_ls_2">
+                                <div class="subject-title">علوم (فيزياء)</div>
+                                <div class="subject-desc">تأسيس المقادير والواحدات وتحويل الجمل.</div>
+                                <button class="done-toggle-btn" onclick="toggleLessonProgress('ls_2')">تمت الدراسة</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="subject-container" id="card_ls_3">
+                                <div class="subject-title">لغة إنجليزية (أنشطة)</div>
+                                <div class="subject-desc">مراجعة تشخيصية وتأسيسية للأزمنة.</div>
+                                <button class="done-toggle-btn" onclick="toggleLessonProgress('ls_3')">تمت الدراسة</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="subject-container" id="card_ls_4">
+                                <div class="subject-title">علوم (أحياء)</div>
+                                <div class="subject-desc">مدخل إلى علم الأحياء والخلية وتركيبها.</div>
+                                <button class="done-toggle-btn" onclick="toggleLessonProgress('ls_4')">تمت الدراسة</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="day-column">الأربعاء 16/09</td>
+                        <td>
+                            <div class="subject-container" id="card_ls_5">
+                                <div class="subject-title">لغة إنجليزية مراجعة</div>
+                                <div class="subject-desc">قواعد تركيب الجملة وتشكيل السؤال.</div>
+                                <button class="done-toggle-btn" onclick="toggleLessonProgress('ls_5')">تمت الدراسة</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="subject-container" id="card_ls_6">
+                                <div class="subject-title">علوم (كيمياء)</div>
+                                <div class="subject-desc">الرموز الكيميائية والتكافؤات والصيغ.</div>
+                                <button class="done-toggle-btn" onclick="toggleLessonProgress('ls_6')">تمت الدراسة</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="subject-container" id="card_ls_7">
+                                <div class="subject-title">لغة عربية (تطبيقات)</div>
+                                <div class="subject-desc">مراجعة المرفوعات والمنصوبات والمجرورات.</div>
+                                <button class="done-toggle-btn" onclick="toggleLessonProgress('ls_7')">تمت الدراسة</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="subject-container" id="card_ls_8">
+                                <div class="subject-title">جغرافيا</div>
+                                <div class="subject-desc">مهارة قراءة المصور وتحديد الجهات والرموز.</div>
+                                <button class="done-toggle-btn" onclick="toggleLessonProgress('ls_8')">تمت الدراسة</
