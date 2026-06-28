@@ -1,158 +1,90 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الخطة الدراسية للتاسع 2027</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f6f9;
-            margin: 0;
-            padding: 20px;
-            color: #333;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-        }
-        .grid-weeks {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 15px;
-            margin-top: 30px;
-        }
-        .week-card {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            cursor: pointer;
-            border: 1px solid #e0e0e0;
-            transition: transform 0.2s;
-        }
-        .week-card:hover {
-            transform: translateY(-5px);
-            border-color: #3498db;
-        }
-        /* Modal Style */
-        .modal {
-            display: none; 
-            position: fixed; 
-            z-index: 1000; 
-            left: 0; top: 0;
-            width: 100%; height: 100%; 
-            background-color: rgba(0,0,0,0.5);
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-content {
-            background-color: white;
-            padding: 25px;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 1000px;
-            max-height: 85vh;
-            overflow-y: auto;
-            position: relative;
-        }
-        .close {
-            position: absolute;
-            top: 15px;
-            left: 20px;
-            font-size: 28px;
-            cursor: pointer;
-            color: #aaa;
-        }
-        .close:hover { color: #000; }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: center;
-        }
-        th { background-color: #3498db; color: white; }
-        tr:nth-child(even) { background-color: #f9f9f9; }
-        .test-day { background-color: #fadbd8; }
-        .review-day { background-color: #d5f5e3; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Winter Study Planner</title>
+
+<!-- CSS (لاحقًا نربط ملفاتك) -->
+<link rel="stylesheet" href="css/core.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/responsive.css">
+<link rel="stylesheet" href="css/modal.css">
 </head>
+
 <body>
 
-<div class="container">
-    <h1>الخطة الدراسية الشتوية - شهادة التعليم الأساسي 2027</h1>
-    
-    <!-- أزرار الأسابيع الثابتة -->
-    <div class="grid-weeks">
-        <div class="week-card" onclick="openModal('week1')">📅 الأسبوع الأول</div>
-        <div class="week-card" onclick="openModal('week2')">📅 الأسبوع الثاني</div>
-        <!-- بقية الأسابيع كانت مكررة هنا استاتيكياً -->
-    </div>
+<!-- APP ROOT -->
+<div id="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="brand">🎓 Winter Study Planner</div>
+
+        <div class="nav">
+            <button>🏠 Dashboard</button>
+            <button>📚 Lessons</button>
+            <button>📅 Weeks</button>
+            <button>📊 Progress</button>
+            <button>⚙️ Settings</button>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- TOPBAR -->
+        <div class="topbar">
+            <h2>Dashboard</h2>
+
+            <input type="text" placeholder="Search lessons..." class="search">
+
+            <button onclick="toggleTheme()">🌙</button>
+        </div>
+
+        <!-- STATS (سيتم تعبئتها لاحقًا من JS) -->
+        <section class="grid grid-4" id="stats">
+            <div class="card">📚 Weeks: --</div>
+            <div class="card">📖 Lessons: --</div>
+            <div class="card">🧪 Tests: --</div>
+            <div class="card">📊 Progress: --</div>
+        </section>
+
+        <!-- PROGRESS BAR -->
+        <section class="card">
+            <h3>Overall Progress</h3>
+            <div class="progress">
+                <div id="progress-bar"></div>
+            </div>
+        </section>
+
+        <!-- WEEKS (سنعبيها ديناميكيًا لاحقًا) -->
+        <section class="grid grid-3" id="weeks-container">
+            <!-- JS will inject weeks here -->
+        </section>
+
+    </main>
+
 </div>
 
-<!-- النافذة المنبثقة للأسبوع الأول -->
-<div id="week1" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal('week1')">&times;</span>
-        <h2>الأسبوع الأول: من الثلاثاء 15 أيلول إلى الجمعة 18 أيلول 2026</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>اليوم والتاريخ</th>
-                    <th>الحصة الأولى</th>
-                    <th>الحصة الثانية</th>
-                    <th>الحصة الثالثة</th>
-                    <th>الحصة الرابعة</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><b>الثلاثاء 15/09</b></td>
-                    <td>رياضيات (هندسة)<br><small>تأسيس ومفهوم التناسب وخواصه.</small></td>
-                    <td>علوم (فيزياء)<br><small>تأسيس المقادير والواحدات وتحويل الجمل.</small></td>
-                    <td>لغة إنجليزية (أنشطة)<br><small>مراجعة تشخيصية وتأسيسية للأزمنة.</small></td>
-                    <td>علوم (أحياء)<br><small>مدخل إلى علم الأحياء والخلية وتركيبها.</small></td>
-                </tr>
-                <tr>
-                    <td><b>الأربعاء 16/09</b></td>
-                    <td>لغة إنجليزية مراجعة<br><small>قواعد تركيب الجملة وتشكيل السؤال.</small></td>
-                    <td>علوم (كيمياء)<br><small>الرموز الكيميائية والتكافؤات والصيغ.</small></td>
-                    <td>لغة عربية (تطبيقات)<br><small>مراجعة المرفوعات والمنصوبات والمجرورات.</small></td>
-                    <td>جغرافيا<br><small>مهارة قراءة المصور وتحديد الجهات والرموز.</small></td>
-                </tr>
-                <tr class="test-day">
-                    <td><b>الخميس 17/09</b></td>
-                    <td>رياضيات (اختبار)<br><small>📝 اختبار تشخيصي في العمليات الحسابية.</small></td>
-                    <td>اختبار اجتماعية<br><small>📝 اختبار مهارة الخطوط الزمنية والخرائط.</small></td>
-                    <td>اختبار عربي<br><small>📝 اختبار تشخيصي في الإعراب والإملاء.</small></td>
-                    <td>اختبار علوم عامة<br><small>📝 اختبار تشخيصي في المفاهيم العلمية.</small></td>
-                </tr>
-                <tr class="review-day">
-                    <td><b>الجمعة 18/09</b></td>
-                    <td>رياضيات مراجعة<br><small>معالجة نقاط الضعف الحسابية المكتشفة.</small></td>
-                    <td>اجتماعيات مراجعة<br><small>مراجعة نقد الوثائق التاريخية والجغرافية.</small></td>
-                    <td>مراجعة عربي<br><small>مراجعة وتثبيت قواعد الهمزات والتاءات.</small></td>
-                    <td>مراجعة علوم عامة<br><small>مراجعة وتثبيت الصياغة الكيميائية والفيزيائية.</small></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+<!-- JS (مهم جداً type="module") -->
+<script type="module" src="js/core/app.js"></script>
 
+<!-- مؤقت: زر الثيم -->
 <script>
-    function openModal(id) {
-        document.getElementById(id).style.display = "flex";
-    }
-    function closeModal(id) {
-        document.getElementById(id).style.display = "none";
-    }
-    // إغلاق النافذة عندNormally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
+function toggleTheme() {
+    document.body.classList.toggle("light");
+}
+</script>
+<div id="modal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">×</span>
+        <div id="modal-body"></div>
+    </div>
+</div>
+</body>
+</html>
