@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Winter Study Planner</title>
 
     <link rel="stylesheet" href="css/core.css">
@@ -13,15 +12,72 @@
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/modal.css">
-</head>
 
+    <style>
+        /* تصليح المودال والجدول فوراً لمنع التداخل والخلل البصري */
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.7); 
+            backdrop-filter: blur(4px);
+            overflow-y: auto;
+            padding: 20px;
+        }
+        .modal-content {
+            background: #ffffff;
+            margin: 5% auto;
+            padding: 24px;
+            border-radius: 12px;
+            width: 95%;
+            max-width: 1100px;
+            color: #1e293b;
+            position: relative;
+            direction: rtl;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .close {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            cursor: pointer;
+            font-size: 28px;
+            color: #94a3b8;
+            font-weight: bold;
+        }
+        .close:hover { color: #ef4444; }
+        
+        /* تنسيق جدول الحصص الأفقي المحترف */
+        .table-responsive { width: 100%; overflow-x: auto; margin-top: 15px; }
+        table { width: 100%; border-collapse: separate; border-spacing: 8px; }
+        th { background-color: #f1f5f9; color: #334155; padding: 12px; font-weight: bold; text-align: center; border-radius: 6px; }
+        td { vertical-align: top; }
+        .day-column { background: #e2e8f0 !important; color: #1e293b !important; font-weight: bold; text-align: center; vertical-align: middle; border-radius: 6px; padding: 10px; min-width: 100px; }
+        
+        /* كروت المواد والتفاعل */
+        .subject-container { padding: 12px; border-radius: 8px; border-right: 4px solid #4f46e5; background: #ffffff; box-shadow: 0 2px 6px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; text-align: right; min-height: 95px; display: flex; flex-direction: column; justify-content: space-between; }
+        .subject-title { font-weight: bold; color: #1e3a8a; font-size: 14px; }
+        .subject-desc { font-size: 12px; color: #475569; margin: 4px 0 8px; line-height: 1.4; }
+        .done-toggle-btn { padding: 4px 10px; font-size: 11px; border-radius: 12px; cursor: pointer; border: 1px solid #cbd5e1; background: #ffffff; color: #64748b; font-weight: 600; align-self: flex-start; }
+        
+        /* حالة اكتمال المادة */
+        .subject-container.is-done { border-right-color: #10b981 !important; background-color: #f0fdf4 !important; border-color: #a7f3d0; }
+        .subject-container.is-done .subject-title { color: #065f46 !important; text-decoration: line-through; opacity: 0.7; }
+        .subject-container.is-done .done-toggle-btn { background-color: #10b981 !important; color: white !important; border-color: #10b981 !important; }
+        
+        tr.test-day { background-color: #fff7ed !important; }
+        tr.review-day { background-color: #f0fdf4 !important; }
+    </style>
+</head>
 <body>
 
 <div id="app">
-
     <aside class="sidebar">
         <div class="brand">🎓 Winter Study Planner</div>
-
         <div class="nav">
             <button class="active">🏠 Dashboard</button>
             <button>📚 Lessons</button>
@@ -32,51 +88,181 @@
     </aside>
 
     <main class="main">
-
         <div class="topbar">
             <h2>Dashboard</h2>
-
             <input type="text" placeholder="Search lessons..." class="search">
-
             <button onclick="toggleTheme()">🌙</button>
         </div>
 
         <section class="grid grid-4" id="stats">
-            <div class="card">📚 Weeks: --</div>
-            <div class="card">📖 Lessons: --</div>
-            <div class="card">🧪 Tests: --</div>
-            <div class="card">📊 Progress: --</div>
-        </section>
+            </section>
 
         <section class="card">
             <h3>Overall Progress</h3>
             <div class="progress" style="background: #e2e8f0; border-radius: 10px; overflow: hidden; height: 20px; margin-top: 10px;">
-                <div id="progress-bar" style="width: 0%; height: 100%; background: linear-gradient(135deg, #4f46e5, #2563eb); color: white; text-align: center; font-size: 12px; line-height: 20px; transition: width 0.4s ease;">0%</div>
+                <div id="progress-bar" style="width: 0%; height: 100%; background: linear-gradient(135deg, #4f46e5, #2563eb); color: white; text-align: center; font-size: 12px; line-height: 20px; transition: width 0.4s;">0%</div>
             </div>
         </section>
 
         <section class="grid grid-3" id="weeks-container">
             </section>
-
     </main>
-
 </div>
 
-<div id="modal" class="modal hidden" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); overflow: auto;">
-    <div class="modal-content" style="background-color: #fefefe; margin: 5% auto; padding: 20px; border: 1px solid #888; width: 85%; max-width: 1000px; border-radius: 12px; direction: rtl; position: relative;">
-        <span class="close" onclick="closeModal()" style="color: #aaa; float: left; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
-        <div id="modal-body">
-            </div>
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div id="modal-body"></div>
     </div>
 </div>
 
-<script type="module" src="js/core/app.js"></script>
-
 <script>
-function toggleTheme() {
-    document.body.classList.toggle("light");
-}
-</script>
+    // قاعدة البيانات
+    const planData = {
+        weeks: [
+            {
+                id: "week-1",
+                title: "الأسبوع الأول",
+                date: "من الثلاثاء 15 أيلول إلى الجمعة 18 أيلول 2026",
+                days: [
+                    {
+                        name: "الثلاثاء 15/09",
+                        lessons: [
+                            { id: "ls_1", subject: "رياضيات (هندسة)", desc: "تأسيس ومفهوم التناسب وخواصه." },
+                            { id: "ls_2", subject: "علوم (فيزياء)", desc: "تأسيس المقادير والواحدات وتحويل الجمل." },
+                            { id: "ls_3", subject: "لغة إنجليزية", desc: "مراجعة تشخيصية وتأسيسية للأزمنة." },
+                            { id: "ls_4", subject: "علوم (أحياء)", desc: "مدخل إلى علم الأحياء والخلية وتركيبها." }
+                        ]
+                    },
+                    {
+                        name: "الأربعاء 16/09",
+                        lessons: [
+                            { id: "ls_5", subject: "لغة إنجليزية مراجعة", desc: "قواعد تركيب الجملة وتشكيل السؤال." },
+                            { id: "ls_6", subject: "علوم (كيمياء)", desc: "الرموز الكيميائية والتكافؤات والصيغ." },
+                            { id: "ls_7", subject: "لغة عربية", desc: "مراجعة المرفوعات والمنصوبات والمجرورات." },
+                            { id: "ls_8", subject: "جغرافيا", desc: "مهارة قراءة المصور وتحديد الجهات والرموز." }
+                        ]
+                    },
+                    {
+                        name: "الخميس 17/09",
+                        type: "test-day",
+                        lessons: [
+                            { id: "ls_9", subject: "رياضيات (اختبار)", desc: "📝 اختبار تشخيصي في العمليات الحسابية." },
+                            { id: "ls_10", subject: "اختبار اجتماعية", desc: "📝 اختبار مهارة الخطوط الزمنية والخرائط." },
+                            { id: "ls_11", subject: "اختبار عربي", desc: "📝 اختبار تشخيصي في الإعراب والإملاء." },
+                            { id: "ls_12", subject: "اختبار علوم عامة", desc: "📝 اختبار تشخيصي في المفاهية العلمية." }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "week-2",
+                title: "الأسبوع الثاني",
+                date: "من السبت 19 أيلول إلى الجمعة 25 أيلول 2026",
+                days: [
+                    {
+                        name: "السبت 19/09",
+                        lessons: [
+                            { id: "ls_13", subject: "رياضيات (جبر)", desc: "و1 - د1: الأعداد النسبية واللانسبية." },
+                            { id: "ls_14", subject: "لغة عربية (نصوص)", desc: "استماع (عازفات مريمين) وقراءة النافورة." },
+                            { id: "ls_15", subject: "تاريخ", desc: "و1 - د1: الغزو العثماني (معركة مرج دابق)." }
+                        ]
+                    }
+                ]
+            }
+        ]
+    };
 
+    const STORAGE_KEY = 'student_winter_progress_2027';
+
+    function getProgress() { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+    function saveProgress(progress) { localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }
+
+    function updateStats() {
+        const progress = getProgress();
+        let total = 0, tests = 0;
+        planData.weeks.forEach(w => w.days.forEach(d => {
+            total += d.lessons.length;
+            if(d.type === 'test-day') tests += d.lessons.length;
+        }));
+        const completed = progress.filter(id => id.startsWith('ls_')).length;
+        const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+        document.getElementById('stats').innerHTML = `
+            <div class="card">📚 الأسابيع المتاحة: ${planData.weeks.length}</div>
+            <div class="card">📖 إجمالي الدروس: ${total}</div>
+            <div class="card">🧪 الاختبارات: ${tests}</div>
+            <div class="card">📊 المكتملة حالياً: ${completed}</div>
+        `;
+        document.getElementById('progress-bar').style.width = percent + '%';
+        document.getElementById('progress-bar').innerText = percent + '%';
+    }
+
+    function renderWeeks() {
+        const container = document.getElementById('weeks-container');
+        container.innerHTML = '';
+        planData.weeks.forEach(week => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `<h3>📅 ${week.title}</h3><p>${week.date}</p><button style="padding:6px 12px; background:#4f46e5; color:white; border:none; border-radius:6px; cursor:pointer;">عرض جدول المواد</button>`;
+            card.onclick = () => openWeekModal(week);
+            container.appendChild(card);
+        });
+    }
+
+    function openWeekModal(week) {
+        const modal = document.getElementById('modal');
+        const progress = getProgress();
+        let tableHTML = `<h2 style="margin-top:0; color:#1e3a8a;">📅 ${week.title}</h2><div class="table-responsive"><table><thead><tr><th>اليوم</th><th colspan="4">الحصص المقررة</th></tr></thead><tbody>`;
+
+        week.days.forEach(day => {
+            tableHTML += `<tr class="${day.type || ''}"><td class="day-column">${day.name}</td>`;
+            day.lessons.forEach(lesson => {
+                const isDone = progress.includes(lesson.id);
+                tableHTML += `<td>
+                    <div class="subject-container ${isDone ? 'is-done' : ''}" id="card_${lesson.id}">
+                        <div class="subject-title">${lesson.subject}</div>
+                        <div class="subject-desc">${lesson.desc}</div>
+                        <button class="done-toggle-btn" onclick="toggleLesson('${lesson.id}', event)">${isDone ? 'مكتمل ✓' : 'تمت الدراسة'}</button>
+                    </div>
+                </td>`;
+            });
+            for(let i=day.lessons.length; i<4; i++) tableHTML += '<td></td>';
+            tableHTML += '</tr>';
+        });
+
+        tableHTML += '</tbody></table></div>';
+        document.getElementById('modal-body').innerHTML = tableHTML;
+        modal.style.display = 'block';
+    }
+
+    function toggleLesson(id, event) {
+        event.stopPropagation();
+        let progress = getProgress();
+        const card = document.getElementById('card_' + id);
+        const btn = card.querySelector('.done-toggle-btn');
+
+        if(progress.includes(id)) {
+            progress = progress.filter(item => item !== id);
+            card.classList.remove('is-done');
+            btn.innerText = 'تمت الدراسة';
+        } else {
+            progress.push(id);
+            card.classList.add('is-done');
+            btn.innerText = 'مكتمل ✓';
+        }
+        saveProgress(progress);
+        updateStats();
+    }
+
+    function closeModal() { document.getElementById('modal').style.display = 'none'; }
+    window.onclick = function(e) { if(e.target == document.getElementById('modal')) closeModal(); }
+    function toggleTheme() { document.body.classList.toggle("light"); }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        updateStats();
+        renderWeeks();
+    });
+</script>
 </body>
 </html>
