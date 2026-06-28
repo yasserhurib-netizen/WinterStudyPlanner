@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Winter Study Planner</title>
+
+<!-- CSS (لاحقًا نربط ملفاتك) -->
+<link rel="stylesheet" href="css/core.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/responsive.css">
+
+</head>
+
+<body>
+
+<!-- APP ROOT -->
+<div id="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="brand">🎓 Winter Study Planner</div>
+
+        <div class="nav">
+            <button>🏠 Dashboard</button>
+            <button>📚 Lessons</button>
+            <button>📅 Weeks</button>
+            <button>📊 Progress</button>
+            <button>⚙️ Settings</button>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- TOPBAR -->
+        <div class="topbar">
+            <h2>Dashboard</h2>
+
+            <input type="text" placeholder="Search lessons..." class="search">
+
+            <button onclick="toggleTheme()">🌙</button>
+        </div>
+
+        <!-- STATS (سيتم تعبئتها لاحقًا من JS) -->
+        <section class="grid grid-4" id="stats">
+            <div class="card">📚 Weeks: --</div>
+            <div class="card">📖 Lessons: --</div>
+            <div class="card">🧪 Tests: --</div>
+            <div class="card">📊 Progress: --</div>
+        </section>
+
+        <!-- PROGRESS BAR -->
+        <section class="card">
+            <h3>Overall Progress</h3>
+            <div class="progress">
+                <div id="progress-bar"></div>
+            </div>
+        </section>
+
+        <!-- WEEKS (سنعبيها ديناميكيًا لاحقًا) -->
+        <section class="grid grid-3" id="weeks-container">
+            <!-- JS will inject weeks here -->
+        </section>
+
+    </main>
+
+</div>
+
+<!-- JS (مهم جداً type="module") -->
+<script type="module" src="js/core/app.js"></script>
+
+<!-- مؤقت: زر الثيم -->
+<script>
+function toggleTheme() {
+    document.body.classList.toggle("light");
+}
+</script>
+
+</body>
+</html>
