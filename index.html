@@ -21,53 +21,53 @@
 <!-- APP ROOT -->
 <div id="app">
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-        <div class="brand">🎓 Winter Study Planner</div>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="brand">🎓 Winter Study Planner</div>
 
-        <div class="nav">
-            <button>🏠 Dashboard</button>
-            <button>📚 Lessons</button>
-            <button>📅 Weeks</button>
-            <button>📊 Progress</button>
-            <button>⚙️ Settings</button>
-        </div>
-    </aside>
+        <div class="nav">
+            <button>🏠 Dashboard</button>
+            <button>📚 Lessons</button>
+            <button>📅 Weeks</button>
+            <button>📊 Progress</button>
+            <button>⚙️ Settings</button>
+        </div>
+    </aside>
 
-    <!-- MAIN -->
-    <main class="main">
+    <!-- MAIN -->
+    <main class="main">
 
-        <!-- TOPBAR -->
-        <div class="topbar">
-            <h2>Dashboard</h2>
+        <!-- TOPBAR -->
+        <div class="topbar">
+            <h2>Dashboard</h2>
 
-            <input type="text" placeholder="Search lessons..." class="search">
+            <input type="text" placeholder="Search lessons..." class="search">
 
-            <button onclick="toggleTheme()">🌙</button>
-        </div>
+            <button onclick="toggleTheme()">🌙</button>
+        </div>
 
-        <!-- STATS (سيتم تعبئتها لاحقًا من JS) -->
-        <section class="grid grid-4" id="stats">
-            <div class="card">📚 Weeks: --</div>
-            <div class="card">📖 Lessons: --</div>
-            <div class="card">🧪 Tests: --</div>
-            <div class="card">📊 Progress: --</div>
-        </section>
+        <!-- STATS (سيتم تعبئتها لاحقًا من JS) -->
+        <section class="grid grid-4" id="stats">
+            <div class="card">📚 Weeks: --</div>
+            <div class="card">📖 Lessons: --</div>
+            <div class="card">🧪 Tests: --</div>
+            <div class="card">📊 Progress: --</div>
+        </section>
 
-        <!-- PROGRESS BAR -->
-        <section class="card">
-            <h3>Overall Progress</h3>
-            <div class="progress">
-                <div id="progress-bar"></div>
-            </div>
-        </section>
+        <!-- PROGRESS BAR -->
+        <section class="card">
+            <h3>Overall Progress</h3>
+            <div class="progress">
+                <div id="progress-bar"></div>
+            </div>
+        </section>
 
-        <!-- WEEKS (سنعبيها ديناميكيًا لاحقًا) -->
-        <section class="grid grid-3" id="weeks-container">
-            <!-- JS will inject weeks here -->
-        </section>
+        <!-- WEEKS (سنعبيها ديناميكيًا لاحقًا) -->
+        <section class="grid grid-3" id="weeks-container">
+            <!-- JS will inject weeks here -->
+        </section>
 
-    </main>
+    </main>
 
 </div>
 
@@ -77,14 +77,14 @@
 <!-- مؤقت: زر الثيم -->
 <script>
 function toggleTheme() {
-    document.body.classList.toggle("light");
+    document.body.classList.toggle("light");
 }
 </script>
 <div id="modal" class="modal hidden">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">×</span>
-        <div id="modal-body"></div>
-    </div>
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">×</span>
+        <div id="modal-body"></div>
+    </div>
 </div>
 </body>
 </html>
