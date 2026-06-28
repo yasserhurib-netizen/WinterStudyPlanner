@@ -1,0 +1,48 @@
+{
+  "title": "Winter Study Planner 2027",
+  "meta": {
+    "version": "1.0",
+    "created": "2027"
+  },
+
+  "weeks": [
+    {
+      "id": 1,
+      "title": "الأسبوع الأول - المقدمة",
+      "status": "active",
+      "progress": 30,
+      "color": "#22c55e",
+      "lessons": [
+        {
+          "id": "w1-l1",
+          "title": "مقدمة عامة",
+          "type": "lesson",
+          "completed": true
+        },
+        {
+          "id": "w1-l2",
+          "title": "أساسيات النظام",
+          "type": "lesson",
+          "completed": false
+        }
+      ],
+      "tests": [
+        {
+          "id": "w1-t1",
+          "title": "اختبار الأسبوع الأول",
+          "score": null
+        }
+      ]
+    },
+
+    {
+      "id": 2,
+      "title": "الأسبوع الثاني - الأساسيات",
+      "status": "locked",
+      "progress": 0,
+      "color": "#06b6d4",
+      "lessons": [],
+      "tests": []
+    }
+  ]
+}
