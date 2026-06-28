@@ -1,0 +1,13 @@
+.card {
+    background: var(--panel);
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
