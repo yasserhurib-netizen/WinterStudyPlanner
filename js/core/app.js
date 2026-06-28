@@ -1,9 +1,11 @@
 import { loadData } from "./data.js";
 import { renderWeeks } from "../modules/weeks.js";
 
-document.addEventListener("DOMContentLoaded", async () => {
-    await loadData();
-    renderWeeks();
+async function init() {
+    await loadData();   // لازم ننتظر البيانات
+    renderWeeks();      // بعدها نرسم UI
 
     console.log("App Started 🚀");
-});
+}
+
+document.addEventListener("DOMContentLoaded", init);
