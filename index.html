@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="css/modal.css">
 
     <style>
-        /* تصليح المودال والجدول فوراً لمنع التداخل والخلل البصري */
+        /* التنسيقات الفورية لإصلاح تعارض المودال والجدول ومنع التداخل البصري */
         .modal {
             display: none; 
             position: fixed;
@@ -23,51 +23,142 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background: rgba(15, 23, 42, 0.7); 
+            background: rgba(15, 23, 42, 0.75); 
             backdrop-filter: blur(4px);
             overflow-y: auto;
             padding: 20px;
         }
+        
         .modal-content {
             background: #ffffff;
-            margin: 5% auto;
-            padding: 24px;
-            border-radius: 12px;
+            margin: 4% auto;
+            padding: 25px;
+            border-radius: 14px;
             width: 95%;
-            max-width: 1100px;
+            max-width: 1150px; /* عرض واسع ومريح لفرد جدول المواد أفقياً */
             color: #1e293b;
             position: relative;
             direction: rtl;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
+        
+        .hidden {
+            display: none !important;
+        }
+        
         .close {
             position: absolute;
             top: 15px;
             left: 20px;
             cursor: pointer;
-            font-size: 28px;
+            font-size: 30px;
             color: #94a3b8;
             font-weight: bold;
+            transition: color 0.2s;
+            line-height: 1;
         }
-        .close:hover { color: #ef4444; }
         
-        /* تنسيق جدول الحصص الأفقي المحترف */
-        .table-responsive { width: 100%; overflow-x: auto; margin-top: 15px; }
-        table { width: 100%; border-collapse: separate; border-spacing: 8px; }
-        th { background-color: #f1f5f9; color: #334155; padding: 12px; font-weight: bold; text-align: center; border-radius: 6px; }
-        td { vertical-align: top; }
-        .day-column { background: #e2e8f0 !important; color: #1e293b !important; font-weight: bold; text-align: center; vertical-align: middle; border-radius: 6px; padding: 10px; min-width: 100px; }
+        .close:hover {
+            color: #ef4444;
+        }
         
-        /* كروت المواد والتفاعل */
-        .subject-container { padding: 12px; border-radius: 8px; border-right: 4px solid #4f46e5; background: #ffffff; box-shadow: 0 2px 6px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; text-align: right; min-height: 95px; display: flex; flex-direction: column; justify-content: space-between; }
-        .subject-title { font-weight: bold; color: #1e3a8a; font-size: 14px; }
-        .subject-desc { font-size: 12px; color: #475569; margin: 4px 0 8px; line-height: 1.4; }
-        .done-toggle-btn { padding: 4px 10px; font-size: 11px; border-radius: 12px; cursor: pointer; border: 1px solid #cbd5e1; background: #ffffff; color: #64748b; font-weight: 600; align-self: flex-start; }
+        /* تنسيق الجداول التفاعلية داخل المودال */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 15px;
+        }
         
-        /* حالة اكتمال المادة */
-        .subject-container.is-done { border-right-color: #10b981 !important; background-color: #f0fdf4 !important; border-color: #a7f3d0; }
-        .subject-container.is-done .subject-title { color: #065f46 !important; text-decoration: line-through; opacity: 0.7; }
-        .subject-container.is-done .done-toggle-btn { background-color: #10b981 !important; color: white !important; border-color: #10b981 !important; }
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 8px;
+        }
+        
+        th {
+            background-color: #f1f5f9;
+            color: #334155;
+            padding: 12px;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 6px;
+        }
+        
+        .day-column {
+            background: #e2e8f0 !important;
+            color: #1e293b !important;
+            font-weight: bold;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 6px;
+            padding: 10px;
+            min-width: 100px;
+        }
+        
+        /* كروت المواد التفاعلية */
+        .subject-container {
+            padding: 12px;
+            border-radius: 8px;
+            border-right: 4px solid #4f46e5;
+            background: #ffffff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+            text-align: right;
+            min-height: 95px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .subject-title {
+            font-weight: bold;
+            color: #1e3a8a;
+            font-size: 14px;
+        }
+        
+        .subject-desc {
+            font-size: 12px;
+            color: #475569;
+            margin: 4px 0 8px;
+            line-height: 1.4;
+        }
+        
+        .done-toggle-btn {
+            padding: 4px 10px;
+            font-size: 11px;
+            border-radius: 12px;
+            cursor: pointer;
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            color: #64748b;
+            font-weight: 600;
+            align-self: flex-start;
+            transition: all 0.2s;
+        }
+        
+        .done-toggle-btn:hover {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+        
+        /* الأنماط التفاعلية عند الضغط وإنجاز المادة */
+        .subject-container.is-done {
+            border-right-color: #10b981 !important;
+            background-color: #f0fdf4 !important;
+            border-color: #a7f3d0;
+        }
+        
+        .subject-container.is-done .subject-title {
+            color: #065f46 !important;
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+        
+        .subject-container.is-done .done-toggle-btn {
+            background-color: #10b981 !important;
+            color: white !important;
+            border-color: #10b981 !important;
+        }
         
         tr.test-day { background-color: #fff7ed !important; }
         tr.review-day { background-color: #f0fdf4 !important; }
@@ -117,7 +208,7 @@
 </div>
 
 <script>
-    // قاعدة البيانات
+    // 1. قاعدة البيانات المبدئية للمشروع (الأسابيع الأولى المعتمدة)
     const planData = {
         weeks: [
             {
@@ -150,7 +241,7 @@
                             { id: "ls_9", subject: "رياضيات (اختبار)", desc: "📝 اختبار تشخيصي في العمليات الحسابية." },
                             { id: "ls_10", subject: "اختبار اجتماعية", desc: "📝 اختبار مهارة الخطوط الزمنية والخرائط." },
                             { id: "ls_11", subject: "اختبار عربي", desc: "📝 اختبار تشخيصي في الإعراب والإملاء." },
-                            { id: "ls_12", subject: "اختبار علوم عامة", desc: "📝 اختبار تشخيصي في المفاهية العلمية." }
+                            { id: "ls_12", subject: "اختبار علوم عامة", desc: "📝 اختبار تشخيصي في المفاهيم العلمية." }
                         ]
                     }
                 ]
@@ -165,7 +256,7 @@
                         lessons: [
                             { id: "ls_13", subject: "رياضيات (جبر)", desc: "و1 - د1: الأعداد النسبية واللانسبية." },
                             { id: "ls_14", subject: "لغة عربية (نصوص)", desc: "استماع (عازفات مريمين) وقراءة النافورة." },
-                            { id: "ls_15", subject: "تاريخ", desc: "و1 - د1: الغزو العثماني (معركة مرج دابق)." }
+                            { id: "ls_15", subject: "تاريخ", desc: "و1 - د1: الغزو العثماني للبلاد العربية." }
                         ]
                     }
                 ]
@@ -173,70 +264,112 @@
         ]
     };
 
-    const STORAGE_KEY = 'student_winter_progress_2027';
+    const STORAGE_KEY = 'winter_planner_progress_2026';
 
+    // وظيفية استرجاع وحفظ البيانات التلقائية في ذاكرة المتصفح المحلية
     function getProgress() { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
     function saveProgress(progress) { localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }
 
-    function updateStats() {
+    // تحديث الإحصائيات العامة وشريط التقدم في لوحة التحكم
+    function updateDashboardStats() {
         const progress = getProgress();
-        let total = 0, tests = 0;
-        planData.weeks.forEach(w => w.days.forEach(d => {
-            total += d.lessons.length;
-            if(d.type === 'test-day') tests += d.lessons.length;
-        }));
-        const completed = progress.filter(id => id.startsWith('ls_')).length;
-        const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+        let totalLessonsCount = 0;
+        let totalTestsCount = 0;
 
-        document.getElementById('stats').innerHTML = `
-            <div class="card">📚 الأسابيع المتاحة: ${planData.weeks.length}</div>
-            <div class="card">📖 إجمالي الدروس: ${total}</div>
-            <div class="card">🧪 الاختبارات: ${tests}</div>
-            <div class="card">📊 المكتملة حالياً: ${completed}</div>
-        `;
-        document.getElementById('progress-bar').style.width = percent + '%';
-        document.getElementById('progress-bar').innerText = percent + '%';
+        planData.weeks.forEach(w => w.days.forEach(d => {
+            totalLessonsCount += d.lessons.length;
+            if(d.type === 'test-day') totalTestsCount += d.lessons.length;
+        }));
+
+        const completedCount = progress.filter(id => id.startsWith('ls_')).length;
+        const percent = totalLessonsCount > 0 ? Math.round((completedCount / totalLessonsCount) * 100) : 0;
+
+        const statsContainer = document.getElementById('stats');
+        if (statsContainer) {
+            statsContainer.innerHTML = `
+                <div class="card">📚 أسابيع الخطة: ${planData.weeks.length}</div>
+                <div class="card">📖 إجمالي الدروس: ${totalLessonsCount}</div>
+                <div class="card">🧪 اختبارات مدمجة: ${totalTestsCount}</div>
+                <div class="card">📊 دروس مـنـجـزة: ${completedCount}</div>
+            `;
+        }
+
+        const progressBar = document.getElementById('progress-bar');
+        if (progressBar) {
+            progressBar.style.width = percent + '%';
+            progressBar.innerText = percent + '%';
+        }
     }
 
+    // توليد بطاقات الأسابيع وعرضها في حاوية الـ Grid الرئيسية
     function renderWeeks() {
         const container = document.getElementById('weeks-container');
+        if (!container) return;
         container.innerHTML = '';
+
         planData.weeks.forEach(week => {
             const card = document.createElement('div');
             card.className = 'card';
-            card.innerHTML = `<h3>📅 ${week.title}</h3><p>${week.date}</p><button style="padding:6px 12px; background:#4f46e5; color:white; border:none; border-radius:6px; cursor:pointer;">عرض جدول المواد</button>`;
+            card.innerHTML = `
+                <h3>📅 ${week.title}</h3>
+                <p>${week.date}</p>
+                <button style="padding:6px 12px; background:#4f46e5; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">عرض الجدول</button>
+            `;
             card.onclick = () => openWeekModal(week);
             container.appendChild(card);
         });
     }
 
+    // بناء الهيكل الأفقي المتناسق لجدول المواد داخل النافذة المنبثقة عند النقر
     function openWeekModal(week) {
         const modal = document.getElementById('modal');
         const progress = getProgress();
-        let tableHTML = `<h2 style="margin-top:0; color:#1e3a8a;">📅 ${week.title}</h2><div class="table-responsive"><table><thead><tr><th>اليوم</th><th colspan="4">الحصص المقررة</th></tr></thead><tbody>`;
+        
+        let tableHTML = `
+            <h2 style="margin-top:0; color:#1e3a8a; font-size:22px; padding-bottom:10px; border-bottom:2px solid #f1f5f9;">📅 ${week.title} (${week.date})</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>اليوم</th>
+                            <th colspan="4">الحصص والدروس المقررة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
 
         week.days.forEach(day => {
             tableHTML += `<tr class="${day.type || ''}"><td class="day-column">${day.name}</td>`;
+            
             day.lessons.forEach(lesson => {
                 const isDone = progress.includes(lesson.id);
-                tableHTML += `<td>
-                    <div class="subject-container ${isDone ? 'is-done' : ''}" id="card_${lesson.id}">
-                        <div class="subject-title">${lesson.subject}</div>
-                        <div class="subject-desc">${lesson.desc}</div>
-                        <button class="done-toggle-btn" onclick="toggleLesson('${lesson.id}', event)">${isDone ? 'مكتمل ✓' : 'تمت الدراسة'}</button>
-                    </div>
-                </td>`;
+                tableHTML += `
+                    <td>
+                        <div class="subject-container ${isDone ? 'is-done' : ''}" id="card_${lesson.id}">
+                            <div class="subject-title">${lesson.subject}</div>
+                            <div class="subject-desc">${lesson.desc}</div>
+                            <button class="done-toggle-btn" onclick="toggleLessonStatus('${lesson.id}', event)">${isDone ? 'مكتمل ✓' : 'تمت الدراسة'}</button>
+                        </div>
+                    </td>
+                `;
             });
-            for(let i=day.lessons.length; i<4; i++) tableHTML += '<td></td>';
+
+            // تعبئة الخلايا الفارغة لضمان ثبات التوزيع الأفقي وحماية التصميم
+            for(let i = day.lessons.length; i < 4; i++) {
+                tableHTML += '<td></td>';
+            }
             tableHTML += '</tr>';
         });
 
         tableHTML += '</tbody></table></div>';
         document.getElementById('modal-body').innerHTML = tableHTML;
+        
+        // فتح المودال برمجياً
         modal.style.display = 'block';
     }
 
-    function toggleLesson(id, event) {
+    // معالجة تغيير حالة الحصة (مكتمل / تمت الدراسة) وحفظ التحديث فورياً
+    function toggleLessonStatus(id, event) {
         event.stopPropagation();
         let progress = getProgress();
         const card = document.getElementById('card_' + id);
@@ -252,17 +385,10 @@
             btn.innerText = 'مكتمل ✓';
         }
         saveProgress(progress);
-        updateStats();
+        updateDashboardStats();
     }
 
+    // إغلاق النافذة المنبثقة
     function closeModal() { document.getElementById('modal').style.display = 'none'; }
-    window.onclick = function(e) { if(e.target == document.getElementById('modal')) closeModal(); }
-    function toggleTheme() { document.body.classList.toggle("light"); }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        updateStats();
-        renderWeeks();
-    });
-</script>
-</body>
-</html>
+    
+    // إغلاق المودال عند النقر على المساحة المعتمة الخارجية
