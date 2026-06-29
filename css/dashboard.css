@@ -392,3 +392,12 @@ body.dark .no-lessons {
     font-weight: 600;
     margin-bottom: var(--spacing-sm);
 }
+.week-select {
+    width: 100%;
+    padding: 10px;
+    background: #161a22;
+    color: white;
+    border: 1px solid #222;
+    border-radius: 8px;
+    outline: none;
+}
