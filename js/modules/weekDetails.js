@@ -6,13 +6,13 @@ export function openWeek(id) {
 
     if (!week) return;
 
-    let content = `📅 ${week.title}\n\n`;
+    let content = 📅 ${week.title}\n\n;
 
-    if (!week.lessons || week.lessons.length === 0) {
-        content += "لا توجد دروس";
+    if (week.lessons.length === 0) {
+        content += "لا توجد دروس بعد";
     } else {
-        week.lessons.forEach(lesson => {
-            content += `• ${lesson.title}\n`;
+        week.lessons.forEach(l => {
+            content += - ${l.title} ${l.completed ? "✔" : "❌"}\n;
         });
     }
 
