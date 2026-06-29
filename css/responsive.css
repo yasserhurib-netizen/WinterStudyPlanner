@@ -1,79 +1,364 @@
-/* ===========================
-   Laptop
-=========================== */
+/* ==================== Responsive Design ==================== */
 
-@media (max-width:1200px){
-
-    #stats{
-        grid-template-columns:repeat(2,1fr);
+/* Large Screens (Desktop) */
+@media (min-width: 1440px) {
+    .main {
+        padding: var(--spacing-3xl);
     }
 
-    #weeks-container{
-        grid-template-columns:repeat(2,1fr);
+    #stats {
+        grid-template-columns: repeat(4, 1fr);
     }
-
 }
 
-/* ===========================
-   Tablet
-=========================== */
-
-@media (max-width:900px){
-
-    #app{
-        flex-direction:column;
+/* Medium Screens (Tablets) */
+@media (max-width: 1024px) {
+    #app {
+        grid-template-columns: 1fr;
     }
 
-    .sidebar{
-        width:100%;
+    .sidebar {
+        position: relative;
+        height: auto;
+        width: 100%;
+        border-radius: 0;
+        flex-direction: row;
+        gap: var(--spacing-2xl);
+        padding: var(--spacing-lg);
+        margin-bottom: var(--spacing-xl);
     }
 
-    .topbar{
-        padding:20px;
+    .brand {
+        flex-shrink: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+        border-left: 2px solid var(--gray-100);
+        padding-left: var(--spacing-xl);
     }
 
-    .search{
-        width:100%;
-        margin-top:15px;
+    .nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        flex: 1;
+        gap: var(--spacing-md);
     }
 
-    #weeks-container{
-        grid-template-columns:1fr;
+    .nav button {
+        flex: 1;
+        min-width: 120px;
     }
 
-    .lesson-table{
-        display:block;
-        overflow-x:auto;
+    .sidebar-bottom {
+        width: 100%;
+        flex-direction: row;
+        border-top: 2px solid var(--gray-100);
+        padding-top: var(--spacing-lg);
+        margin-top: var(--spacing-lg);
     }
 
+    .main {
+        margin-right: 0;
+        padding: var(--spacing-xl);
+    }
+
+    .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-lg);
+        padding: var(--spacing-lg);
+    }
+
+    .topbar > div:last-child {
+        width: 100%;
+    }
+
+    .search {
+        width: 100%;
+        min-width: unset;
+    }
+
+    #stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .day-schedule {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
-/* ===========================
-   Mobile
-=========================== */
-
-@media (max-width:600px){
-
-    .main{
-        padding:15px;
+/* Small Screens (Mobile) */
+@media (max-width: 768px) {
+    :root {
+        font-size: 14px;
     }
 
-    #stats{
-        grid-template-columns:1fr;
+    .sidebar {
+        position: relative;
+        height: auto;
+        width: 100%;
+        flex-direction: column;
+        gap: var(--spacing-lg);
+        padding: var(--spacing-lg);
+        border-radius: 0;
     }
 
-    .topbar h2{
-        font-size:28px;
+    .brand {
+        border-left: none;
+        padding-left: 0;
+        padding-bottom: var(--spacing-lg);
+        border-bottom: 2px solid var(--gray-100);
     }
 
-    .section-header{
-        flex-direction:column;
-        gap:15px;
-        align-items:flex-start;
+    .brand h2 {
+        font-size: 2rem;
     }
 
-    .primary-btn{
-        width:100%;
+    .brand h3 {
+        font-size: 0.95rem;
     }
 
+    .brand small {
+        font-size: 0.7rem;
+    }
+
+    .nav {
+        width: 100%;
+        gap: var(--spacing-sm);
+    }
+
+    .nav button {
+        flex: 1;
+        padding: var(--spacing-md);
+        font-size: 0.85rem;
+    }
+
+    .sidebar-bottom {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: var(--spacing-md);
+        margin-top: 0;
+        padding-top: var(--spacing-lg);
+        border-top: 2px solid var(--gray-100);
+    }
+
+    .progress-section {
+        flex: 1;
+    }
+
+    .theme-toggle {
+        gap: var(--spacing-sm);
+    }
+
+    .main {
+        padding: var(--spacing-md);
+        overflow-x: hidden;
+    }
+
+    .topbar {
+        padding: var(--spacing-md);
+        flex-direction: column;
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .topbar > div {
+        width: 100%;
+    }
+
+    .topbar h2 {
+        font-size: 1.3rem;
+        margin-bottom: 0;
+    }
+
+    .topbar p {
+        font-size: 0.85rem;
+        margin-bottom: 0;
+    }
+
+    .search {
+        width: 100%;
+        padding: var(--spacing-md);
+        font-size: 0.9rem;
+    }
+
+    #stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .stat-card {
+        padding: var(--spacing-md);
+    }
+
+    .stat-icon {
+        font-size: 1.5rem;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .stat-card h3 {
+        font-size: 0.75rem;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .stat-card h2 {
+        font-size: 1.5rem;
+    }
+
+    .progress-card {
+        padding: var(--spacing-lg);
+    }
+
+    .weeks-wrapper {
+        padding: var(--spacing-lg);
+    }
+
+    .weeks-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-md);
+    }
+
+    .weeks-nav {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .weeks-slider {
+        gap: var(--spacing-md);
+    }
+
+    .week-item {
+        min-width: 150px;
+        padding: var(--spacing-md);
+    }
+
+    .week-number {
+        font-size: 1.2rem;
+    }
+
+    .week-details {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-md);
+    }
+
+    .detail-item {
+        padding: var(--spacing-md);
+    }
+
+    .detail-value {
+        font-size: 1.2rem;
+    }
+
+    .day-schedule {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .day-card {
+        box-shadow: var(--shadow-sm);
+    }
+
+    .day-header {
+        padding: var(--spacing-md);
+    }
+
+    .day-header h3 {
+        font-size: 1rem;
+    }
+
+    .day-content {
+        padding: var(--spacing-md);
+    }
+
+    .lesson-item {
+        padding: var(--spacing-md);
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .lessons-card {
+        padding: var(--spacing-lg);
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-md);
+    }
+
+    .primary-btn {
+        width: 100%;
+        padding: var(--spacing-md);
+    }
+
+    .lesson-table {
+        font-size: 0.85rem;
+    }
+
+    .lesson-table th,
+    .lesson-table td {
+        padding: var(--spacing-md);
+    }
+
+    .section-title {
+        font-size: 1.2rem;
+        margin-bottom: var(--spacing-lg);
+        margin-top: var(--spacing-lg);
+    }
+}
+
+/* Extra Small Screens (Small Mobile) */
+@media (max-width: 480px) {
+    :root {
+        font-size: 13px;
+    }
+
+    .sidebar {
+        gap: var(--spacing-md);
+    }
+
+    .brand h2 {
+        font-size: 1.5rem;
+    }
+
+    .nav button {
+        font-size: 0.8rem;
+        padding: var(--spacing-sm);
+    }
+
+    #stats {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-card {
+        padding: var(--spacing-md);
+    }
+
+    .week-details {
+        grid-template-columns: 1fr;
+    }
+
+    .progress-circle {
+        width: 100px;
+        height: 100px;
+    }
+
+    .progress-circle-percent {
+        font-size: 1.5rem;
+    }
+
+    .modal-content {
+        padding: var(--spacing-lg);
+        max-width: 100%;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .btn-cancel,
+    .btn-submit {
+        width: 100%;
+    }
 }

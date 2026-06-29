@@ -1,139 +1,489 @@
-/* ===========================
-   CARDS
-=========================== */
+/* ==================== Cards & Components ==================== */
 
-.card{
-    background:#ffffff;
-    border-radius:20px;
-    padding:22px;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
-    transition:.25s;
+.card {
+    background: var(--white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
 }
 
-.card:hover{
-    transform:translateY(-4px);
+body.dark .card {
+    background: var(--gray-900);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
-/* ===========================
-   BUTTONS
-=========================== */
-
-button{
-    font-family:inherit;
+.card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
 }
 
-.primary-btn{
-    background:#5568ff;
-    color:#fff;
-    border:none;
-    border-radius:12px;
-    padding:12px 22px;
-    cursor:pointer;
-    font-size:15px;
-    transition:.25s;
+/* ==================== Stat Cards ==================== */
+
+#stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-2xl);
 }
 
-.primary-btn:hover{
-    background:#4456e6;
+.stat-card {
+    text-align: center;
+    padding: var(--spacing-xl);
 }
 
-/* ===========================
-   SECTION
-=========================== */
-
-.section-title{
-    font-size:26px;
-    color:#243b72;
-    margin:30px 0 18px;
+.stat-icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: var(--spacing-md);
 }
 
-.section-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
+.stat-card h3 {
+    color: var(--gray-600);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--spacing-md);
 }
 
-/* ===========================
-   STAT CARD
-=========================== */
-
-.stat-card{
-    text-align:center;
+body.dark .stat-card h3 {
+    color: var(--gray-400);
 }
 
-.stat-icon{
-    font-size:34px;
-    display:block;
-    margin-bottom:10px;
+.stat-card h2 {
+    color: var(--primary);
+    font-size: 2rem;
+    margin-bottom: 0;
 }
 
-.stat-card h3{
-    margin:8px 0;
-    color:#666;
-    font-size:16px;
-    font-weight:500;
+/* ==================== Progress Card ==================== */
+
+.progress-card {
+    margin-bottom: var(--spacing-2xl);
 }
 
-.stat-card h2{
-    margin:0;
-    font-size:34px;
-    color:#1e2f63;
+.progress-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
 }
 
-/* ===========================
-   LESSON TABLE
-=========================== */
-
-.lesson-table{
-    width:100%;
-    border-collapse:collapse;
+.progress-title h3 {
+    margin-bottom: 0;
+    color: var(--gray-800);
 }
 
-.lesson-table thead{
-    background:#eef3ff;
+body.dark .progress-title h3 {
+    color: var(--gray-100);
 }
 
-.lesson-table th{
-    padding:16px;
-    color:#1d2d60;
-    font-weight:700;
+.progress-title span {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    background: var(--secondary);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
 }
 
-.lesson-table td{
-    padding:16px;
-    border-top:1px solid #ececec;
-    text-align:center;
+body.dark .progress-title span {
+    background: var(--gray-800);
 }
 
-.lesson-table tbody tr:hover{
-    background:#f8faff;
+.progress {
+    background: var(--gray-200);
+    height: 12px;
+    border-radius: 999px;
+    overflow: hidden;
 }
 
-/* ===========================
-   WEEK CARDS
-=========================== */
-
-#weeks-container .card{
-    cursor:pointer;
-    border:2px solid transparent;
+body.dark .progress {
+    background: var(--gray-800);
 }
 
-#weeks-container .card:hover{
-    border-color:#5568ff;
+#progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), #667eea);
+    border-radius: 999px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ===========================
-   SEARCH
-=========================== */
+/* ==================== Section Title ==================== */
 
-.search{
-    background:#fff;
-    border:none;
-    border-radius:12px;
-    padding:14px 18px;
-    font-size:15px;
-    outline:none;
-    width:340px;
-    box-shadow:0 6px 18px rgba(0,0,0,.08);
+.section-title {
+    color: var(--white);
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-xl);
+    margin-top: var(--spacing-2xl);
+    font-weight: 600;
+}
+
+body.dark .section-title {
+    color: var(--gray-100);
+}
+
+/* ==================== Weeks Container ==================== */
+
+.weeks-wrapper {
+    background: var(--white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-xl);
+    margin-bottom: var(--spacing-2xl);
+    box-shadow: var(--shadow-md);
+}
+
+body.dark .weeks-wrapper {
+    background: var(--gray-900);
+}
+
+.weeks-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.weeks-header h2 {
+    margin-bottom: 0;
+    color: var(--gray-800);
+}
+
+body.dark .weeks-header h2 {
+    color: var(--gray-100);
+}
+
+.weeks-nav {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.weeks-nav button {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--secondary);
+    color: var(--primary);
+    border-radius: 50%;
+    font-size: 1.2rem;
+    transition: all var(--transition-fast);
+}
+
+body.dark .weeks-nav button {
+    background: var(--gray-800);
+}
+
+.weeks-nav button:hover {
+    background: var(--primary);
+    color: var(--white);
+    transform: scale(1.1);
+}
+
+/* Weeks Slider */
+.weeks-slider {
+    display: flex;
+    gap: var(--spacing-lg);
+    overflow-x: auto;
+    padding-bottom: var(--spacing-md);
+    scroll-behavior: smooth;
+}
+
+.weeks-slider::-webkit-scrollbar {
+    height: 4px;
+}
+
+.week-item {
+    flex-shrink: 0;
+    background: var(--gray-50);
+    border: 2px solid var(--gray-200);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-lg);
+    min-width: 200px;
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+body.dark .week-item {
+    background: var(--gray-800);
+    border-color: var(--gray-700);
+}
+
+.week-item:hover {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(91, 110, 255, 0.1);
+}
+
+.week-item.active {
+    background: var(--primary);
+    color: var(--white);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-lg);
+}
+
+.week-item.active .week-label {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.week-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.week-item.active .week-number {
+    color: var(--white);
+}
+
+.week-label {
+    font-size: 0.85rem;
+    color: var(--gray-600);
+}
+
+body.dark .week-label {
+    color: var(--gray-400);
+}
+
+/* Week Details */
+.week-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
+}
+
+.detail-item {
+    text-align: center;
+    padding: var(--spacing-lg);
+    background: var(--gray-50);
+    border-radius: var(--radius-lg);
+}
+
+body.dark .detail-item {
+    background: var(--gray-800);
+}
+
+.detail-icon {
+    font-size: 1.8rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.detail-label {
+    font-size: 0.8rem;
+    color: var(--gray-600);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--spacing-sm);
+}
+
+body.dark .detail-label {
+    color: var(--gray-400);
+}
+
+.detail-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+/* ==================== Day Schedule ==================== */
+
+.day-schedule {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
+}
+
+.day-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-base);
+}
+
+body.dark .day-card {
+    background: var(--gray-800);
+}
+
+.day-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.day-header {
+    background: linear-gradient(135deg, var(--primary), #667eea);
+    color: var(--white);
+    padding: var(--spacing-lg);
+    text-align: center;
+}
+
+.day-header h3 {
+    margin-bottom: 0;
+    font-size: 1.2rem;
+}
+
+.day-header small {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.day-content {
+    padding: var(--spacing-lg);
+}
+
+.day-content.empty {
+    text-align: center;
+    padding: var(--spacing-2xl);
+    color: var(--gray-500);
+}
+
+/* ==================== Lessons Card ==================== */
+
+.lessons-card {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.section-header h2 {
+    margin-bottom: 0;
+}
+
+.primary-btn {
+    background: var(--primary);
+    color: var(--white);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    font-weight: 500;
+    transition: all var(--transition-base);
+}
+
+.primary-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* ==================== Table ==================== */
+
+.lesson-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.lesson-table thead {
+    background: var(--secondary);
+}
+
+body.dark .lesson-table thead {
+    background: var(--gray-800);
+}
+
+.lesson-table th {
+    padding: var(--spacing-lg);
+    text-align: right;
+    font-weight: 600;
+    color: var(--gray-800);
+    border-bottom: 2px solid var(--gray-200);
+}
+
+body.dark .lesson-table th {
+    color: var(--gray-200);
+    border-color: var(--gray-700);
+}
+
+.lesson-table td {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--gray-200);
+    text-align: right;
+}
+
+body.dark .lesson-table td {
+    border-color: var(--gray-700);
+}
+
+.lesson-table tbody tr:hover {
+    background: var(--gray-50);
+}
+
+body.dark .lesson-table tbody tr:hover {
+    background: var(--gray-800);
+}
+
+/* Subject Badge */
+.subject-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.subject-badge.islamic {
+    background: rgba(6, 182, 212, 0.1);
+    color: var(--subject-1);
+}
+
+.subject-badge.history {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--subject-2);
+}
+
+.subject-badge.english {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--subject-3);
+}
+
+.subject-badge.arabic {
+    background: rgba(168, 85, 247, 0.1);
+    color: var(--subject-4);
+}
+
+.subject-badge.science {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--subject-5);
+}
+
+.subject-badge.math {
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--subject-6);
+}
+
+/* Status Badge */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    font-size: 0.85rem;
+}
+
+.status-badge.completed {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--success);
+}
+
+.status-badge.pending {
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--warning);
+}
+
+.status-badge.not-started {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--danger);
 }
