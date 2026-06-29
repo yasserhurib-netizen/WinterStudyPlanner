@@ -1,364 +1,455 @@
-/* ==================== Responsive Design ==================== */
+/**
+ * Responsive Design - Media Queries & Mobile Optimizations
+ */
 
-/* Large Screens (Desktop) */
-@media (min-width: 1440px) {
-    .main {
-        padding: var(--spacing-3xl);
-    }
-
-    #stats {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-/* Medium Screens (Tablets) */
+/* ========== Tablets (768px - 1024px) ========== */
 @media (max-width: 1024px) {
-    #app {
-        grid-template-columns: 1fr;
+    :root {
+        --font-size-3xl: 1.5rem;
+        --font-size-2xl: 1.25rem;
     }
 
-    .sidebar {
-        position: relative;
-        height: auto;
-        width: 100%;
-        border-radius: 0;
-        flex-direction: row;
-        gap: var(--spacing-2xl);
-        padding: var(--spacing-lg);
-        margin-bottom: var(--spacing-xl);
+    .container {
+        padding: 0 var(--spacing-lg);
     }
 
-    .brand {
-        flex-shrink: 0;
-        padding-bottom: 0;
-        border-bottom: none;
-        border-left: 2px solid var(--gray-100);
-        padding-left: var(--spacing-xl);
+    .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    .nav {
-        flex-direction: row;
-        flex-wrap: wrap;
-        flex: 1;
-        gap: var(--spacing-md);
-    }
-
-    .nav button {
-        flex: 1;
-        min-width: 120px;
-    }
-
-    .sidebar-bottom {
-        width: 100%;
-        flex-direction: row;
-        border-top: 2px solid var(--gray-100);
-        padding-top: var(--spacing-lg);
-        margin-top: var(--spacing-lg);
-    }
-
-    .main {
-        margin-right: 0;
-        padding: var(--spacing-xl);
-    }
-
-    .topbar {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: var(--spacing-lg);
-        padding: var(--spacing-lg);
-    }
-
-    .topbar > div:last-child {
-        width: 100%;
-    }
-
-    .search {
-        width: 100%;
-        min-width: unset;
+    .grid-3 {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     #stats {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .day-schedule {
-        grid-template-columns: repeat(2, 1fr);
+    #weeks-container {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     }
 }
 
-/* Small Screens (Mobile) */
+/* ========== Tablets & Mobile (768px and below) ========== */
 @media (max-width: 768px) {
     :root {
-        font-size: 14px;
+        --spacing-xl: 1rem;
+        --spacing-2xl: 1.5rem;
+        --font-size-base: 15px;
+    }
+
+    /* ========== Layout ========== */
+    #app {
+        grid-template-columns: 1fr;
+        gap: 0;
     }
 
     .sidebar {
-        position: relative;
-        height: auto;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
         width: 100%;
-        flex-direction: column;
-        gap: var(--spacing-lg);
-        padding: var(--spacing-lg);
+        height: auto;
+        border-right: none;
+        border-top: 1px solid var(--light-border);
         border-radius: 0;
+        padding: var(--spacing-sm);
+        z-index: var(--z-sticky);
+        padding-bottom: var(--spacing-md);
+    }
+
+    body.dark .sidebar {
+        border-top-color: var(--dark-border);
     }
 
     .brand {
-        border-left: none;
-        padding-left: 0;
-        padding-bottom: var(--spacing-lg);
-        border-bottom: 2px solid var(--gray-100);
-    }
-
-    .brand h2 {
-        font-size: 2rem;
-    }
-
-    .brand h3 {
-        font-size: 0.95rem;
-    }
-
-    .brand small {
-        font-size: 0.7rem;
+        display: none;
     }
 
     .nav {
-        width: 100%;
-        gap: var(--spacing-sm);
+        flex-direction: row;
+        justify-content: space-around;
+        gap: 0;
     }
 
     .nav button {
         flex: 1;
-        padding: var(--spacing-md);
-        font-size: 0.85rem;
-    }
-
-    .sidebar-bottom {
-        width: 100%;
-        flex-direction: row;
-        justify-content: space-between;
-        gap: var(--spacing-md);
-        margin-top: 0;
-        padding-top: var(--spacing-lg);
-        border-top: 2px solid var(--gray-100);
-    }
-
-    .progress-section {
-        flex: 1;
-    }
-
-    .theme-toggle {
-        gap: var(--spacing-sm);
+        padding: var(--spacing-sm);
+        font-size: var(--font-size-xs);
+        margin: 0 var(--spacing-xs);
     }
 
     .main {
-        padding: var(--spacing-md);
-        overflow-x: hidden;
+        padding: var(--spacing-lg);
+        padding-bottom: 120px;
+        gap: var(--spacing-lg);
     }
 
+    /* ========== Topbar ========== */
     .topbar {
-        padding: var(--spacing-md);
         flex-direction: column;
+        align-items: stretch;
         gap: var(--spacing-md);
-        margin-bottom: var(--spacing-lg);
+        padding: var(--spacing-lg);
+        position: static;
     }
 
     .topbar > div {
-        width: 100%;
+        flex: 1;
     }
 
     .topbar h2 {
-        font-size: 1.3rem;
-        margin-bottom: 0;
+        font-size: var(--font-size-xl);
+        margin-bottom: var(--spacing-sm);
     }
 
     .topbar p {
-        font-size: 0.85rem;
-        margin-bottom: 0;
+        font-size: var(--font-size-xs);
     }
 
     .search {
-        width: 100%;
+        max-width: none;
         padding: var(--spacing-md);
-        font-size: 0.9rem;
+    }
+
+    /* ========== Cards & Components ========== */
+    .card {
+        padding: var(--spacing-lg);
+    }
+
+    .stat-card {
+        padding: var(--spacing-lg);
     }
 
     #stats {
         grid-template-columns: repeat(2, 1fr);
         gap: var(--spacing-md);
-        margin-bottom: var(--spacing-lg);
-    }
-
-    .stat-card {
-        padding: var(--spacing-md);
-    }
-
-    .stat-icon {
-        font-size: 1.5rem;
-        margin-bottom: var(--spacing-sm);
-    }
-
-    .stat-card h3 {
-        font-size: 0.75rem;
-        margin-bottom: var(--spacing-sm);
-    }
-
-    .stat-card h2 {
-        font-size: 1.5rem;
     }
 
     .progress-card {
         padding: var(--spacing-lg);
     }
 
-    .weeks-wrapper {
-        padding: var(--spacing-lg);
+    #weeks-container {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: var(--spacing-sm);
     }
 
-    .weeks-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: var(--spacing-md);
-    }
-
-    .weeks-nav {
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    .weeks-slider {
-        gap: var(--spacing-md);
-    }
-
-    .week-item {
-        min-width: 150px;
-        padding: var(--spacing-md);
+    .week-card {
+        padding: var(--spacing-sm);
     }
 
     .week-number {
-        font-size: 1.2rem;
+        font-size: var(--font-size-xs);
     }
 
-    .week-details {
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--spacing-md);
+    .week-name {
+        font-size: var(--font-size-sm);
     }
 
-    .detail-item {
-        padding: var(--spacing-md);
+    /* ========== Tables ========== */
+    .lesson-table {
+        font-size: var(--font-size-sm);
     }
 
-    .detail-value {
-        font-size: 1.2rem;
+    .lesson-table th,
+    .lesson-table td {
+        padding: var(--spacing-sm);
     }
 
-    .day-schedule {
+    /* ========== Grid System ========== */
+    .grid-2, .grid-3, .grid-4 {
         grid-template-columns: 1fr;
-        gap: var(--spacing-md);
     }
 
-    .day-card {
-        box-shadow: var(--shadow-sm);
+    /* ========== Buttons ========== */
+    .btn {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: var(--font-size-sm);
     }
 
-    .day-header {
-        padding: var(--spacing-md);
+    .btn-block {
+        width: 100%;
     }
 
-    .day-header h3 {
-        font-size: 1rem;
-    }
-
-    .day-content {
-        padding: var(--spacing-md);
-    }
-
-    .lesson-item {
-        padding: var(--spacing-md);
-        margin-bottom: var(--spacing-sm);
-    }
-
-    .lessons-card {
-        padding: var(--spacing-lg);
-    }
-
+    /* ========== Section Header ========== */
     .section-header {
         flex-direction: column;
         align-items: flex-start;
         gap: var(--spacing-md);
     }
 
-    .primary-btn {
+    .section-header h2 {
+        font-size: var(--font-size-lg);
+    }
+
+    /* ========== Modal ========== */
+    .modal-content {
+        max-width: 95vw;
+        width: 95vw;
+        max-height: 95vh;
+        padding: var(--spacing-lg);
+    }
+
+    .modal-footer {
+        flex-direction: column;
+    }
+
+    .modal-footer button {
         width: 100%;
+    }
+
+    /* ========== Forms ========== */
+    .form-input,
+    .form-textarea,
+    .form-select {
         padding: var(--spacing-md);
     }
 
-    .lesson-table {
-        font-size: 0.85rem;
+    /* ========== Utilities ========== */
+    .show-mobile {
+        display: block;
     }
 
-    .lesson-table th,
-    .lesson-table td {
-        padding: var(--spacing-md);
+    .hide-mobile {
+        display: none;
     }
 
-    .section-title {
-        font-size: 1.2rem;
-        margin-bottom: var(--spacing-lg);
-        margin-top: var(--spacing-lg);
+    .flex-column-mobile {
+        flex-direction: column;
     }
 }
 
-/* Extra Small Screens (Small Mobile) */
+/* ========== Small Mobile (480px and below) ========== */
 @media (max-width: 480px) {
     :root {
-        font-size: 13px;
+        --spacing-lg: 1rem;
+        --spacing-md: 0.75rem;
+        --font-size-base: 14px;
+        --font-size-lg: 1rem;
+        --font-size-xl: 1.125rem;
+        --font-size-2xl: 1.25rem;
     }
 
-    .sidebar {
+    .main {
+        padding: var(--spacing-md);
+        padding-bottom: 120px;
         gap: var(--spacing-md);
     }
 
-    .brand h2 {
-        font-size: 1.5rem;
+    .topbar {
+        padding: var(--spacing-md);
+        gap: var(--spacing-sm);
     }
 
-    .nav button {
-        font-size: 0.8rem;
-        padding: var(--spacing-sm);
+    .topbar h2 {
+        font-size: var(--font-size-lg);
     }
 
-    #stats {
-        grid-template-columns: 1fr;
+    .topbar p {
+        font-size: var(--font-size-xs);
+        display: none;
+    }
+
+    .card {
+        padding: var(--spacing-md);
+        border-radius: var(--radius-lg);
     }
 
     .stat-card {
         padding: var(--spacing-md);
     }
 
-    .week-details {
+    #stats {
         grid-template-columns: 1fr;
     }
 
-    .progress-circle {
-        width: 100px;
-        height: 100px;
+    #weeks-container {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-sm);
     }
 
-    .progress-circle-percent {
-        font-size: 1.5rem;
+    .week-card {
+        padding: var(--spacing-xs);
+    }
+
+    .week-number {
+        display: none;
+    }
+
+    .week-name {
+        font-size: var(--font-size-sm);
+    }
+
+    .week-date {
+        font-size: var(--font-size-xs);
+    }
+
+    .nav button {
+        padding: var(--spacing-xs);
+        font-size: var(--font-size-xs);
+        margin: 0 2px;
+    }
+
+    .lessons-card {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .lesson-table th,
+    .lesson-table td {
+        padding: var(--spacing-xs);
+        font-size: var(--font-size-xs);
+    }
+
+    .btn {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: var(--font-size-sm);
+        width: 100%;
+    }
+
+    .primary-btn,
+    .secondary-btn,
+    .success-btn,
+    .danger-btn {
+        width: 100%;
     }
 
     .modal-content {
-        padding: var(--spacing-lg);
-        max-width: 100%;
+        max-width: 90vw;
+        width: 90vw;
+        padding: var(--spacing-md);
     }
 
-    .form-actions {
-        flex-direction: column-reverse;
+    .close {
+        width: 24px;
+        height: 24px;
+        font-size: var(--font-size-lg);
     }
 
-    .btn-cancel,
-    .btn-submit {
-        width: 100%;
+    .alert {
+        padding: var(--spacing-md);
+        gap: var(--spacing-sm);
+    }
+
+    .alert-icon {
+        font-size: var(--font-size-lg);
+    }
+}
+
+/* ========== Landscape Mode ========== */
+@media (max-height: 600px) and (orientation: landscape) {
+    .sidebar {
+        height: 100vh;
+        position: static;
+        border-right: 1px solid var(--light-border);
+        border-top: none;
+    }
+
+    .nav {
+        gap: var(--spacing-xs);
+    }
+
+    .nav button {
+        padding: var(--spacing-xs) var(--spacing-md);
+        font-size: var(--font-size-xs);
+    }
+
+    .main {
+        padding-bottom: var(--spacing-lg);
+    }
+}
+
+/* ========== Touch Device Optimizations ========== */
+@media (hover: none) and (pointer: coarse) {
+    button,
+    .btn,
+    a,
+    input {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    .nav button {
+        padding: var(--spacing-md);
+    }
+
+    .week-card {
+        padding: var(--spacing-md);
+    }
+
+    .lesson-item {
+        padding: var(--spacing-md);
+    }
+}
+
+/* ========== Print Styles ========== */
+@media print {
+    .sidebar,
+    .topbar,
+    .nav,
+    button,
+    .modal {
+        display: none;
+    }
+
+    body {
+        background-color: white;
+        color: black;
+    }
+
+    .main {
+        padding: 0;
+    }
+
+    .card {
+        page-break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+
+    a {
+        text-decoration: underline;
+    }
+}
+
+/* ========== Reduced Motion ========== */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ========== High DPI Screens ========== */
+@media (min-resolution: 192dpi) {
+    :root {
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.08);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.12);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.12);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.12);
+    }
+}
+
+/* ========== Dark Mode Preference ========== */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: var(--dark-bg);
+        color: var(--dark-text);
+    }
+}
+
+/* ========== High Contrast Mode ========== */
+@media (prefers-contrast: more) {
+    :root {
+        --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+    }
+
+    input,
+    button {
+        border-width: 2px;
     }
 }
