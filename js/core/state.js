@@ -1,8 +1,13 @@
 export const state = {
-    meta: {},
+
     weeks: [],
-    lessons: [],
+
     tests: [],
-    progress: 0,
-    theme: "dark"
+
+    settings: {},
+
+    currentWeek: null,
+
+    progress: 0
+
 };
