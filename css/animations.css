@@ -1,6 +1,87 @@
-.card {
-    transition: 0.3s ease;
+/* ===========================
+   Animations
+=========================== */
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
 }
-.card:hover {
-    transform: translateY(-5px);
+
+@keyframes slideRight{
+
+    from{
+        opacity:0;
+        transform:translateX(-30px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+
+}
+
+@keyframes zoomIn{
+
+    from{
+        opacity:0;
+        transform:scale(.9);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+
+}
+
+.sidebar{
+
+    animation:slideRight .5s ease;
+
+}
+
+.topbar{
+
+    animation:fadeIn .5s ease;
+
+}
+
+.card{
+
+    animation:fadeIn .6s ease;
+
+}
+
+.modal-content{
+
+    animation:zoomIn .25s ease;
+
+}
+
+button{
+
+    transition:.25s;
+
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.card:hover{
+
+    transform:translateY(-5px);
+
 }
