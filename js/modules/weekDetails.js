@@ -17,15 +17,26 @@ export function openWeek(id) {
 
     } else {
 
-        html += "<ul>";
+     html += "<ul>";
 
-        week.lessons.forEach(lesson => {
+week.lessons.forEach((lesson, index) => {
 
-            html += `<li>${lesson.completed ? "✅" : "⬜"} ${lesson.title}</li>`;
+    html += `
+        <li>
+            <label>
+                <input
+                    type="checkbox"
+                    ${lesson.completed ? "checked" : ""}
+                    onchange="toggleLesson(${week.id}, ${index})"
+                >
+                ${lesson.title}
+            </label>
+        </li>
+    `;
 
-        });
+});
 
-        html += "</ul>";
+html += "</ul>"; 
     }
 
     body.innerHTML = html;
