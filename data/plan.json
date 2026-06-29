@@ -1,169 +1,48 @@
 {
-  "global_stats": {
-    "total_weeks": 27,
-    "total_subjects": 16,
-    "total_lessons": 1089,
-    "total_exams": 54,
-    "overall_progress_percentage": 45,
-    "completed_weeks_count": 12
+  "title": "Winter Study Planner 2027",
+  "meta": {
+    "version": "1.0",
+    "created": "2027"
   },
+
   "weeks": [
     {
-      "week_id": 1,
-      "week_name": "الأسبوع الأول",
-      "week_date_range": "15 - 18 أيلول 2026",
-      "is_current": true,
-      "stats": {
-        "days_count": 4,
-        "lessons_count": 16,
-        "exams_count": 4
-      },
-      "days": [
+      "id": 1,
+      "title": "الأسبوع الأول - المقدمة",
+      "status": "active",
+      "progress": 30,
+      "color": "#22c55e",
+      "lessons": [
         {
-          "day_name": "الإثنين",
-          "day_date": "15 أيلول",
-          "lessons": {
-            "math": {
-              "title": "التناسب وخواصه",
-              "subtitle": "مفهوم التناسب وخواص التناسب",
-              "status": "completed"
-            },
-            "science": {
-              "title": "الخلية",
-              "subtitle": "تركيب الخلية والعضيات",
-              "status": "completed"
-            },
-            "arabic": {
-              "title": "النص الشعري",
-              "subtitle": "تحليل النص الشعري والأفكار الرئيسية",
-              "status": "completed"
-            },
-            "english": {
-              "title": "Unit 1: Lesson 1",
-              "subtitle": "Vocabulary & Grammar",
-              "status": "completed"
-            },
-            "social_studies": {
-              "title": "التاريخ الحديث",
-              "subtitle": "أحداث القرن العشرين وأهم التطورات",
-              "status": "completed"
-            },
-            "islamic_studies": {
-              "title": "سورة الملك",
-              "subtitle": "حفظ وتفسير سورة الملك",
-              "status": "completed"
-            }
-          }
+          "id": "w1-l1",
+          "title": "مقدمة عامة",
+          "type": "lesson",
+          "completed": true
         },
         {
-          "day_name": "الثلاثاء",
-          "day_date": "16 أيلول",
-          "lessons": {
-            "math": {
-              "title": "المعادلات النسبية",
-              "subtitle": "حل المعادلات النسبية",
-              "status": "completed"
-            },
-            "science": {
-              "title": "الأنسجة النباتية",
-              "subtitle": "أنواع الأنسجة ووظائفها",
-              "status": "completed"
-            },
-            "arabic": {
-              "title": "البلاغة (التشبيه)",
-              "subtitle": "أساليب التشبيه وأركانه",
-              "status": "completed"
-            },
-            "english": {
-              "title": "Unit 1: Lesson 2",
-              "subtitle": "Reading Comprehension",
-              "status": "completed"
-            },
-            "social_studies": {
-              "title": "الجغرافيا الطبيعية",
-              "subtitle": "الجبال والسهول والأنهار",
-              "status": "completed"
-            },
-            "islamic_studies": {
-              "title": "أحكام النون الساكنة والتنوين",
-              "subtitle": "الإظهار والإدغام والإخفاء",
-              "status": "completed"
-            }
-          }
-        },
+          "id": "w1-l2",
+          "title": "أساسيات النظام",
+          "type": "lesson",
+          "completed": false
+        }
+      ],
+      "tests": [
         {
-          "day_name": "الأربعاء",
-          "day_date": "17 أيلول",
-          "lessons": {
-            "math": {
-              "title": "النسبة المئوية",
-              "subtitle": "حساب النسبة المئوية وتطبيقاتها",
-              "status": "pending"
-            },
-            "science": {
-              "title": "المادة",
-              "subtitle": "حالات المادة وخصائصها",
-              "status": "pending"
-            },
-            "arabic": {
-              "title": "النحو (المبتدأ والخبر)",
-              "subtitle": "أنواع المبتدأ والخبر",
-              "status": "pending"
-            },
-            "english": {
-              "title": "Unit 1: Lesson 3",
-              "subtitle": "Writing Skills",
-              "status": "pending"
-            },
-            "social_studies": {
-              "title": "السكان والهجرة",
-              "subtitle": "توزيع السكان والهجرة",
-              "status": "pending"
-            },
-            "islamic_studies": {
-              "title": "الفقه: الطهارة",
-              "subtitle": "أحكام المياه وأنواعها",
-              "status": "pending"
-            }
-          }
-        },
-        {
-          "day_name": "الخميس",
-          "day_date": "18 أيلول",
-          "lessons": {
-            "math": {
-              "title": "المتوسط الحسابي",
-              "subtitle": "حساب المتوسط وتطبيقاته",
-              "status": "pending"
-            },
-            "science": {
-              "title": "الطاقة",
-              "subtitle": "أنواع الطاقة ومصادرها",
-              "status": "pending"
-            },
-            "arabic": {
-              "title": "الإملاء",
-              "subtitle": "همزة القطع والوصل",
-              "status": "pending"
-            },
-            "english": {
-              "title": "Unit 1: Review",
-              "subtitle": "Review Lessons 1-3",
-              "status": "pending"
-            },
-            "social_studies": {
-              "title": "الخرائط",
-              "subtitle": "أنواع الخرائط ومقاييسها",
-              "status": "pending"
-            },
-            "islamic_studies": {
-              "title": "السيرة النبوية",
-              "subtitle": "غزوة بدر وأحداثها",
-              "status": "pending"
-            }
-          }
+          "id": "w1-t1",
+          "title": "اختبار الأسبوع الأول",
+          "score": null
         }
       ]
+    },
+
+    {
+      "id": 2,
+      "title": "الأسبوع الثاني - الأساسيات",
+      "status": "locked",
+      "progress": 0,
+      "color": "#06b6d4",
+      "lessons": [],
+      "tests": []
     }
   ]
 }
