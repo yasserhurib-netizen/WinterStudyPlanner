@@ -1,207 +1,189 @@
-/* ==================== Modal Styles ==================== */
+/**
+ * Modal Styles - Dialog & Popup Components
+ */
 
+/* ========== Modal Overlay ========== */
 .modal {
-    display: flex;
     position: fixed;
-    z-index: var(--z-modal);
-    left: 0;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
     align-items: center;
     justify-content: center;
-    backdrop-filter: blur(4px);
-    animation: fadeIn var(--transition-base);
+    z-index: var(--z-modal);
+    animation: fadeIn var(--transition-fast);
 }
 
 .modal.hidden {
     display: none;
 }
 
+/* ========== Modal Content ========== */
 .modal-content {
-    background: var(--white);
-    border-radius: var(--radius-2xl);
-    padding: var(--spacing-2xl);
+    background-color: var(--light-bg);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
     max-width: 500px;
     width: 90%;
     max-height: 90vh;
     overflow-y: auto;
     box-shadow: var(--shadow-xl);
+    animation: slideUp var(--transition-normal);
     position: relative;
-    animation: slideUp var(--transition-base);
 }
 
 body.dark .modal-content {
-    background: var(--gray-900);
+    background-color: var(--dark-secondary);
 }
 
-/* Close Button */
+/* ========== Close Button ========== */
 .close {
     position: absolute;
-    top: var(--spacing-lg);
-    left: var(--spacing-lg);
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--gray-500);
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    font-size: var(--font-size-2xl);
+    font-weight: 300;
+    color: var(--light-text);
     cursor: pointer;
     transition: color var(--transition-fast);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 body.dark .close {
-    color: var(--gray-400);
+    color: var(--dark-text);
 }
 
-.close:hover,
-.close:focus {
-    color: var(--gray-800);
+.close:hover {
+    color: var(--primary-color);
 }
 
-body.dark .close:hover,
-body.dark .close:focus {
-    color: var(--gray-100);
-}
-
-/* Modal Body */
+/* ========== Modal Body ========== */
 #modal-body {
     padding-top: var(--spacing-lg);
 }
 
-/* Form in Modal */
+.modal-header {
+    margin-bottom: var(--spacing-xl);
+}
+
+.modal-header h2 {
+    margin: 0;
+}
+
+.modal-body {
+    margin-bottom: var(--spacing-xl);
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-md);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--light-border);
+}
+
+body.dark .modal-footer {
+    border-top-color: var(--dark-border);
+}
+
+/* ========== Form in Modal ========== */
 .modal-form {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-lg);
+    gap: var(--spacing-md);
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
+    gap: var(--spacing-sm);
 }
 
-.form-group label {
+.form-label {
     font-weight: 600;
-    margin-bottom: var(--spacing-sm);
-    color: var(--gray-800);
+    color: var(--light-text);
 }
 
-body.dark .form-group label {
-    color: var(--gray-200);
+body.dark .form-label {
+    color: var(--dark-text);
 }
 
-.form-group input,
-.form-group textarea,
-.form-group select {
+.form-input,
+.form-textarea,
+.form-select {
     padding: var(--spacing-md);
-    border: 2px solid var(--gray-200);
+    border: 1px solid var(--light-border);
     border-radius: var(--radius-lg);
-    font-size: 1rem;
+    font-family: inherit;
+    font-size: var(--font-size-base);
+    background-color: var(--light-secondary);
+    color: var(--light-text);
+    transition: all var(--transition-fast);
 }
 
-body.dark .form-group input,
-body.dark .form-group textarea,
-body.dark .form-group select {
-    background: var(--gray-800);
-    border-color: var(--gray-700);
-    color: var(--gray-100);
+body.dark .form-input,
+body.dark .form-textarea,
+body.dark .form-select {
+    background-color: var(--dark-tertiary);
+    color: var(--dark-text);
+    border-color: var(--dark-border);
 }
 
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
     outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(91, 110, 255, 0.1);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 
-/* Form Actions */
-.form-actions {
-    display: flex;
-    gap: var(--spacing-lg);
-    justify-content: flex-end;
-    margin-top: var(--spacing-xl);
+.form-textarea {
+    resize: vertical;
+    min-height: 100px;
 }
 
-.btn-cancel {
-    background: var(--gray-200);
-    color: var(--gray-800);
-    padding: var(--spacing-md) var(--spacing-lg);
-    border-radius: var(--radius-lg);
-    font-weight: 500;
-    cursor: pointer;
-    transition: all var(--transition-fast);
+.form-error {
+    color: var(--danger-color);
+    font-size: var(--font-size-sm);
 }
 
-body.dark .btn-cancel {
-    background: var(--gray-800);
-    color: var(--gray-200);
+.form-help {
+    color: var(--light-text);
+    opacity: 0.6;
+    font-size: var(--font-size-sm);
 }
 
-.btn-cancel:hover {
-    background: var(--gray-300);
+body.dark .form-help {
+    color: var(--dark-text);
 }
 
-body.dark .btn-cancel:hover {
-    background: var(--gray-700);
-}
-
-.btn-submit {
-    background: var(--primary);
-    color: var(--white);
-    padding: var(--spacing-md) var(--spacing-lg);
-    border-radius: var(--radius-lg);
-    font-weight: 500;
-    cursor: pointer;
-    border: none;
-    transition: all var(--transition-fast);
-}
-
-.btn-submit:hover {
-    background: var(--primary-dark);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
-
-.btn-submit:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
-}
-
-/* Confirmation Modal */
-.modal-header {
-    margin-bottom: var(--spacing-lg);
-}
-
-.modal-header h2 {
-    margin-bottom: var(--spacing-sm);
-    color: var(--gray-900);
-}
-
-body.dark .modal-header h2 {
-    color: var(--gray-100);
-}
-
-.modal-header p {
-    margin-bottom: 0;
-    color: var(--gray-600);
-}
-
-body.dark .modal-header p {
-    color: var(--gray-400);
-}
-
-/* Small Modal */
-.modal-sm .modal-content {
+/* ========== Dialog Variations ========== */
+.dialog-confirmation {
     max-width: 400px;
 }
 
-/* Large Modal */
-.modal-lg .modal-content {
-    max-width: 800px;
+.dialog-confirmation .modal-body {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
 }
 
-/* Animations */
+.dialog-confirmation .icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-lg);
+}
+
+.dialog-confirmation .modal-footer {
+    justify-content: center;
+}
+
+/* ========== Animations ========== */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -222,23 +204,19 @@ body.dark .modal-header p {
     }
 }
 
-/* Responsive Modal */
+/* ========== Responsive ========== */
 @media (max-width: 768px) {
     .modal-content {
         max-width: 95%;
-        padding: var(--spacing-xl);
+        width: 95%;
+        padding: var(--spacing-lg);
     }
 
-    .form-actions {
-        flex-direction: column-reverse;
+    .modal-footer {
+        flex-direction: column;
     }
 
-    .btn-cancel,
-    .btn-submit {
+    .modal-footer button {
         width: 100%;
-    }
-
-    .modal-lg .modal-content {
-        max-width: 100%;
     }
 }
