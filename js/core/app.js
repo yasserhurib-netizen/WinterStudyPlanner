@@ -1,454 +1,323 @@
 // ============================================================
-//  app.js  –  منطق التطبيق الرئيسي
+// app.js – Refactored Clean Architecture (Phase 1)
 // ============================================================
 
-// ── State ──────────────────────────────────────────────────
-let state = {
-  currentWeek: 0,   // index in SCHEDULE
+// ===================== STATE =====================
+const store = {
+  currentWeek: 0,
   currentPage: 'home',
-  progress: {},     // lessonId → { done, notes }
+  progress: {},
+  theme: 'light'
 };
 
-// ── Init ───────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
+// ===================== INIT =====================
+document.addEventListener('DOMContentLoaded', initApp);
+
+function initApp() {
   loadProgress();
-  renderWeekTabs();
-  renderAllWeeksGrid();
-  renderSubjectsPage();
-  renderExamsPage();
-  renderReviewPage();
-  renderProgressPage();
-  selectWeek(0);
-  updateRing();
-  applyThemeFromStorage();
-  setupNavButtons();
-});
+  loadTheme();
 
-// ── NAV ────────────────────────────────────────────────────
-function setupNavButtons() {
-  document.querySelectorAll('.nav-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const page = btn.dataset.page;
-      showPage(page);
+  UI.initNavigation();
+  UI.initWeeks();
+  UI.renderAllPages();
+
+  Week.select(0);
+  Progress.updateRing();
+}
+
+// ============================================================
+// 🧭 NAVIGATION MODULE
+// ============================================================
+const UI = {
+
+  initNavigation() {
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.showPage(btn.dataset.page);
+      });
     });
-  });
-}
+  },
 
-function showPage(pageId) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
 
-  const page = document.getElementById('page-' + pageId);
-  if (page) page.classList.add('active');
+    document.getElementById('page-' + pageId)?.classList.add('active');
+    document.querySelector(`[data-page="${pageId}"]`)?.classList.add('active');
 
-  const btn = document.querySelector(`.nav-btn[data-page="${pageId}"]`);
-  if (btn) btn.classList.add('active');
+    store.currentPage = pageId;
+  },
 
-  state.currentPage = pageId;
-}
-
-// ── WEEK TABS ──────────────────────────────────────────────
-function renderWeekTabs() {
-  const container = document.getElementById('weeksTabs');
-  container.innerHTML = '';
-  SCHEDULE.forEach((wk, idx) => {
-    const btn = document.createElement('button');
-    btn.className = 'week-tab';
-    btn.dataset.idx = idx;
-    btn.innerHTML = `
-      <span class="wt-name">${wk.name}</span>
-      <span class="wt-dates">${wk.dates}</span>
-    `;
-    btn.addEventListener('click', () => selectWeek(idx));
-    container.appendChild(btn);
-  });
-}
-
-function selectWeek(idx) {
-  state.currentWeek = idx;
-
-  document.querySelectorAll('.week-tab').forEach((t, i) => {
-    t.classList.toggle('active', i === idx);
-  });
-
-  renderWeekDetail(SCHEDULE[idx]);
-}
-
-function scrollWeeks(dir) {
-  const next = state.currentWeek + dir;
-  if (next >= 0 && next < SCHEDULE.length) {
-    selectWeek(next);
-    // Scroll the tab into view
-    const tabs = document.querySelectorAll('.week-tab');
-    if (tabs[next]) tabs[next].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  renderAllPages() {
+    Subject.render();
+    Exam.render();
+    Review.render();
+    Progress.renderPage();
   }
-}
+};
 
-// ── WEEK DETAIL ────────────────────────────────────────────
-function renderWeekDetail(wk) {
-  document.getElementById('weekTitle').textContent = wk.name;
-  document.getElementById('weekDates').textContent = '📅 ' + wk.dates;
+// ============================================================
+// 📅 WEEK MODULE
+// ============================================================
+const Week = {
 
-  // Count exams & lessons
-  let examCount = 0, lessonCount = 0;
-  const dayCount = wk.days.length;
-  wk.days.forEach(d => {
-    d.lessons.forEach(l => {
-      if (l.subject === 'exam') examCount++;
-      else lessonCount++;
+  initWeeks() {
+    const container = document.getElementById('weeksTabs');
+    container.innerHTML = '';
+
+    SCHEDULE.forEach((wk, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'week-tab';
+      btn.innerHTML = `
+        <span>${wk.name}</span>
+        <small>${wk.dates}</small>
+      `;
+
+      btn.addEventListener('click', () => this.select(idx));
+      container.appendChild(btn);
     });
-  });
+  },
 
-  document.getElementById('wkExams').textContent   = examCount;
-  document.getElementById('wkLessons').textContent = lessonCount;
-  document.getElementById('wkDays').textContent    = dayCount;
+  select(idx) {
+    store.currentWeek = idx;
 
-  renderLessonGrid(wk);
-}
+    document.querySelectorAll('.week-tab')
+      .forEach((t, i) => t.classList.toggle('active', i === idx));
 
-function renderLessonGrid(wk) {
-  const grid = document.getElementById('lessonGrid');
-  grid.innerHTML = '';
+    this.renderDetail(SCHEDULE[idx]);
+  },
 
-  // Figure out unique subjects (columns)
-  const subjectKeys = [];
-  wk.days.forEach(d => {
-    d.lessons.forEach(l => {
-      const key = l.subject;
-      if (!subjectKeys.includes(key)) subjectKeys.push(key);
+  renderDetail(week) {
+    document.getElementById('weekTitle').textContent = week.name;
+    document.getElementById('weekDates').textContent = week.dates;
+
+    const stats = this.calculateStats(week);
+
+    document.getElementById('wkExams').textContent = stats.exams;
+    document.getElementById('wkLessons').textContent = stats.lessons;
+    document.getElementById('wkDays').textContent = stats.days;
+
+    Grid.render(week);
+  },
+
+  calculateStats(week) {
+    let lessons = 0, exams = 0;
+
+    week.days.forEach(d => {
+      d.lessons.forEach(l => {
+        if (l.subject === 'exam') exams++;
+        else lessons++;
+      });
     });
-  });
 
-  // Limit columns to 6 for layout
-  const cols = subjectKeys.slice(0, 6);
-  const colCount = cols.length;
+    return {
+      lessons,
+      exams,
+      days: week.days.length
+    };
+  }
+};
 
-  // Update grid columns
-  grid.style.gridTemplateColumns = `auto repeat(${colCount}, 1fr)`;
+// ============================================================
+// 📊 GRID MODULE
+// ============================================================
+const Grid = {
 
-  // Header row: "اليوم" + subjects
-  const dayHeader = document.createElement('div');
-  dayHeader.className = 'grid-header';
-  dayHeader.textContent = 'اليوم';
-  grid.appendChild(dayHeader);
+  render(week) {
+    const grid = document.getElementById('lessonGrid');
+    grid.innerHTML = '';
 
-  cols.forEach(key => {
-    const subj = SUBJECTS[key];
-    const hdr = document.createElement('div');
-    hdr.className = 'grid-header';
-    hdr.innerHTML = `<span style="color:${subj ? subj.color : '#666'}">${subj ? subj.icon + ' ' + subj.name : key}</span>`;
-    grid.appendChild(hdr);
-  });
+    const subjects = this.getSubjects(week);
+    grid.style.gridTemplateColumns = `auto repeat(${subjects.length}, 1fr)`;
 
-  // Rows: one per day
-  wk.days.forEach(d => {
-    // Day label
-    const lbl = document.createElement('div');
-    lbl.className = 'grid-day-label';
-    lbl.innerHTML = `<span class="day-name">${d.day}</span><span class="day-date">${d.date}</span>`;
-    if (d.type === 'exam') lbl.style.background = 'rgba(239,68,68,0.08)';
-    if (d.type === 'review') lbl.style.background = 'rgba(16,185,129,0.08)';
-    grid.appendChild(lbl);
+    this.renderHeader(grid, subjects);
+    this.renderRows(grid, week, subjects);
+  },
 
-    // One cell per subject column
-    cols.forEach(key => {
-      const cell = document.createElement('div');
-      cell.className = 'grid-cell';
+  getSubjects(week) {
+    const set = new Set();
 
-      const lesson = d.lessons.find(l => l.subject === key);
-      if (lesson) {
-        const prog = state.progress[lesson.id] || {};
-        const isDone = prog.done || false;
+    week.days.forEach(d => {
+      d.lessons.forEach(l => set.add(l.subject));
+    });
+
+    return Array.from(set).slice(0, 6);
+  },
+
+  renderHeader(grid, subjects) {
+    grid.appendChild(this.cell('grid-header', 'اليوم'));
+
+    subjects.forEach(key => {
+      const s = SUBJECTS[key];
+      grid.appendChild(this.cell(
+        'grid-header',
+        `<span style="color:${s?.color}">${s?.icon} ${s?.name}</span>`
+      ));
+    });
+  },
+
+  renderRows(grid, week, subjects) {
+    week.days.forEach(day => {
+
+      const label = this.cell('grid-day-label', `
+        <b>${day.day}</b><br>
+        <small>${day.date}</small>
+      `);
+
+      grid.appendChild(label);
+
+      subjects.forEach(key => {
+
+        const lesson = day.lessons.find(l => l.subject === key);
+
+        if (!lesson) {
+          grid.appendChild(this.cell('grid-cell', ''));
+          return;
+        }
+
+        const prog = store.progress[lesson.id];
+        const done = prog?.done;
+
         const subj = SUBJECTS[key];
 
-        cell.innerHTML = `
-          <div class="lesson-card${isDone ? ' is-done' : ''}${lesson.subject === 'exam' ? ' is-exam' : ''}${lesson.subject === 'review' ? ' is-review' : ''}"
-               data-id="${lesson.id}" onclick="openLessonModal('${lesson.id}')">
-            <span class="lc-subject ${subj ? subj.cls : ''}">${subj ? subj.icon + ' ' + subj.name : ''}</span>
-            <span class="lc-title">${lesson.title}</span>
-            <span class="lc-desc">${lesson.description}</span>
-            <button class="lc-status ${isDone ? 'done' : 'pending'}"
-                    onclick="event.stopPropagation(); toggleLesson('${lesson.id}')">
-              ${isDone ? '✓ مكتمل' : '○ مكتمل'}
-            </button>
-          </div>
+        const el = document.createElement('div');
+        el.className = `lesson-card ${done ? 'is-done' : ''}`;
+        el.innerHTML = `
+          <div>${subj?.icon} ${lesson.title}</div>
+          <small>${lesson.description}</small>
+          <button onclick="Actions.toggle('${lesson.id}')">
+            ${done ? '✔' : '○'}
+          </button>
         `;
-      } else {
-        cell.innerHTML = '<div style="min-height:115px"></div>';
-      }
 
-      grid.appendChild(cell);
+        el.onclick = () => Modal.open(lesson.id);
+        grid.appendChild(el);
+      });
     });
-  });
-}
+  },
 
-// ── TOGGLE LESSON ──────────────────────────────────────────
-function toggleLesson(lessonId) {
-  if (!state.progress[lessonId]) state.progress[lessonId] = { done: false, notes: '' };
-  state.progress[lessonId].done = !state.progress[lessonId].done;
-  saveProgress();
-  renderWeekDetail(SCHEDULE[state.currentWeek]);
-  updateRing();
-  renderAllWeeksGrid();
-  renderProgressPage();
-}
-
-// ── LESSON MODAL ───────────────────────────────────────────
-function openLessonModal(lessonId) {
-  // Find lesson
-  let lesson = null;
-  for (const wk of SCHEDULE) {
-    for (const d of wk.days) {
-      lesson = d.lessons.find(l => l.id === lessonId);
-      if (lesson) break;
-    }
-    if (lesson) break;
+  cell(cls, html) {
+    const div = document.createElement('div');
+    div.className = cls;
+    div.innerHTML = html;
+    return div;
   }
-  if (!lesson) return;
+};
 
-  const prog = state.progress[lessonId] || {};
-  const isDone = prog.done || false;
-  const notes = prog.notes || '';
-  const subj = SUBJECTS[lesson.subject];
+// ============================================================
+// ⚡ ACTIONS
+// ============================================================
+const Actions = {
 
-  document.getElementById('modalBody').innerHTML = `
-    <div class="modal-subject-name">
-      ${subj ? subj.icon + ' ' + subj.name : ''} &nbsp; ${lesson.title}
-    </div>
-    <p class="modal-desc">${lesson.description}</p>
-    <div class="modal-actions">
-      <button class="modal-btn done-btn" onclick="toggleLesson('${lessonId}'); closeModal()">
-        ${isDone ? '↩ إلغاء الإكمال' : '✓ تعليم كمكتمل'}
+  toggle(id) {
+    if (!store.progress[id]) {
+      store.progress[id] = { done: false, notes: '' };
+    }
+
+    store.progress[id].done = !store.progress[id].done;
+
+    saveProgress();
+
+    Week.renderDetail(SCHEDULE[store.currentWeek]);
+    Progress.updateRing();
+  }
+};
+
+// ============================================================
+// 🪟 MODAL
+// ============================================================
+const Modal = {
+
+  open(id) {
+    const lesson = findLesson(id);
+    if (!lesson) return;
+
+    const subj = SUBJECTS[lesson.subject];
+    const prog = store.progress[id] || {};
+
+    document.getElementById('modalBody').innerHTML = `
+      <h2>${subj?.icon} ${lesson.title}</h2>
+      <p>${lesson.description}</p>
+
+      <button onclick="Actions.toggle('${id}')">
+        ${prog.done ? 'إلغاء الإكمال' : 'تعليم كمكتمل'}
       </button>
-      <button class="modal-btn undo-btn" onclick="closeModal()">إغلاق</button>
-    </div>
-    <label class="modal-notes-label">ملاحظاتك الخاصة:</label>
-    <textarea class="modal-notes" id="modalNotes" placeholder="أضف ملاحظاتك هنا...">${notes}</textarea>
-    <div style="margin-top:8px">
-      <button class="modal-btn done-btn" onclick="saveNotes('${lessonId}')">💾 حفظ الملاحظات</button>
-    </div>
-  `;
 
-  document.getElementById('lessonModal').classList.remove('hidden');
-}
-
-function saveNotes(lessonId) {
-  const notes = document.getElementById('modalNotes').value;
-  if (!state.progress[lessonId]) state.progress[lessonId] = { done: false, notes: '' };
-  state.progress[lessonId].notes = notes;
-  saveProgress();
-  closeModal();
-}
-
-function closeModal() {
-  document.getElementById('lessonModal').classList.add('hidden');
-}
-
-// Close on overlay click
-document.getElementById('lessonModal').addEventListener('click', (e) => {
-  if (e.target === e.currentTarget) closeModal();
-});
-
-// ── ALL WEEKS GRID ─────────────────────────────────────────
-function renderAllWeeksGrid() {
-  const grid = document.getElementById('allWeeksGrid');
-  grid.innerHTML = '';
-  SCHEDULE.forEach((wk, idx) => {
-    const { total, done } = weekProgress(wk);
-    const pct = total ? Math.round((done / total) * 100) : 0;
-    const full = pct === 100;
-
-    const card = document.createElement('div');
-    card.className = `week-card${full ? ' completed' : ''}`;
-    card.innerHTML = `
-      <div class="wc-number">${wk.week}</div>
-      <div class="wc-name">${wk.name}</div>
-      <div class="wc-dates">${wk.dates}</div>
-      <div class="wc-bar">
-        <div class="wc-bar-fill${full ? ' full' : ''}" style="width:${pct}%"></div>
-      </div>
-      <div class="wc-pct">${pct}% (${done}/${total})</div>
+      <textarea id="notes">${prog.notes || ''}</textarea>
+      <button onclick="Modal.save('${id}')">حفظ</button>
     `;
-    card.addEventListener('click', () => {
-      showPage('home');
-      selectWeek(idx);
-      const tabs = document.querySelectorAll('.week-tab');
-      if (tabs[idx]) tabs[idx].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-    });
-    grid.appendChild(card);
-  });
-}
 
-// ── PROGRESS PAGE ──────────────────────────────────────────
-function renderProgressPage() {
-  const container = document.getElementById('progressPageContent');
-  container.innerHTML = '';
-  SCHEDULE.forEach((wk) => {
-    const { total, done } = weekProgress(wk);
-    const pct = total ? Math.round((done / total) * 100) : 0;
-    const full = pct === 100;
+    document.getElementById('lessonModal').classList.remove('hidden');
+  },
 
-    const card = document.createElement('div');
-    card.className = 'prog-week-card';
-    card.innerHTML = `
-      <div class="pwc-name">${wk.name}</div>
-      <div class="pwc-dates">${wk.dates}</div>
-      <div class="pwc-bar">
-        <div class="pwc-bar-fill${full ? ' full' : ''}" style="width:${pct}%"></div>
-      </div>
-      <div class="pwc-pct">${pct}% · ${done} من ${total} درس</div>
-    `;
-    container.appendChild(card);
-  });
-}
+  save(id) {
+    if (!store.progress[id]) store.progress[id] = {};
+    store.progress[id].notes = document.getElementById('notes').value;
 
-// ── SUBJECTS PAGE ──────────────────────────────────────────
-function renderSubjectsPage() {
-  const grid = document.getElementById('subjectsGrid');
-  grid.innerHTML = '';
-  const counts = {};
+    saveProgress();
+    this.close();
+  },
 
-  SCHEDULE.forEach(wk => {
-    wk.days.forEach(d => {
-      d.lessons.forEach(l => {
-        counts[l.subject] = (counts[l.subject] || 0) + 1;
+  close() {
+    document.getElementById('lessonModal').classList.add('hidden');
+  }
+};
+
+// ============================================================
+// 📈 PROGRESS
+// ============================================================
+const Progress = {
+
+  updateRing() {
+    let total = 0, done = 0;
+
+    SCHEDULE.forEach(w => {
+      w.days.forEach(d => {
+        d.lessons.forEach(l => {
+          total++;
+          if (store.progress[l.id]?.done) done++;
+        });
       });
     });
-  });
 
-  Object.entries(SUBJECTS).forEach(([key, subj]) => {
-    if (!counts[key]) return;
-    const card = document.createElement('div');
-    card.className = 'subject-card';
-    card.style.borderTopColor = subj.color;
-    card.innerHTML = `
-      <div class="sc-icon">${subj.icon}</div>
-      <div class="sc-name" style="color:${subj.color}">${subj.name}</div>
-      <div class="sc-count">${counts[key]} حصة في الخطة</div>
-    `;
-    grid.appendChild(card);
-  });
+    const pct = total ? Math.round((done / total) * 100) : 0;
+
+    document.getElementById('ringPercent').textContent = pct + '%';
+    document.getElementById('overallPct').textContent = pct + '%';
+    document.getElementById('overallBar').style.width = pct + '%';
+  },
+
+  renderPage() {
+    // تبسيط (نطورها لاحقاً)
+    const container = document.getElementById('progressPageContent');
+    if (!container) return;
+    container.innerHTML = '';
+  }
+};
+
+// ============================================================
+// 🔧 HELPERS
+// ============================================================
+function findLesson(id) {
+  for (const w of SCHEDULE) {
+    for (const d of w.days) {
+      const l = d.lessons.find(x => x.id === id);
+      if (l) return l;
+    }
+  }
 }
 
-// ── EXAMS PAGE ─────────────────────────────────────────────
-function renderExamsPage() {
-  const list = document.getElementById('examsList');
-  list.innerHTML = '';
-
-  SCHEDULE.forEach(wk => {
-    wk.days.forEach(d => {
-      d.lessons.filter(l => l.subject === 'exam').forEach(l => {
-        const prog = state.progress[l.id] || {};
-        const item = document.createElement('div');
-        item.className = 'exam-item';
-        item.innerHTML = `
-          <div class="exam-info">
-            <div class="exam-title">📝 ${l.title}</div>
-            <div class="exam-detail">${l.description} · ${d.day} ${d.date}</div>
-          </div>
-          <span class="exam-week">${wk.name}</span>
-        `;
-        list.appendChild(item);
-      });
-    });
-  });
-}
-
-// ── REVIEW PAGE ────────────────────────────────────────────
-function renderReviewPage() {
-  const container = document.getElementById('reviewContent');
-  container.innerHTML = '';
-
-  SCHEDULE.forEach(wk => {
-    wk.days.filter(d => d.type === 'review').forEach(d => {
-      const item = document.createElement('div');
-      item.className = 'review-item';
-      item.innerHTML = `
-        <h3>🔄 ${wk.name} · ${d.day} ${d.date}</h3>
-        <p>${d.lessons.map(l => l.title).join(' | ')}</p>
-      `;
-      container.appendChild(item);
-    });
-  });
-}
-
-// ── PROGRESS RING ──────────────────────────────────────────
-function updateRing() {
-  let totalAll = 0, doneAll = 0;
-  SCHEDULE.forEach(wk => {
-    const p = weekProgress(wk);
-    totalAll += p.total;
-    doneAll  += p.done;
-  });
-
-  const pct = totalAll ? Math.round((doneAll / totalAll) * 100) : 0;
-  const circumference = 314;
-  const offset = circumference - (pct / 100) * circumference;
-
-  document.getElementById('ringFill').style.strokeDashoffset  = offset;
-  document.getElementById('ringPercent').textContent          = pct + '%';
-  document.getElementById('overallPct').textContent           = pct + '%';
-  document.getElementById('overallBar').style.width           = pct + '%';
-
-  // Count completed weeks
-  let completedWeeks = 0;
-  SCHEDULE.forEach(wk => {
-    const { total, done } = weekProgress(wk);
-    if (total && done === total) completedWeeks++;
-  });
-  document.getElementById('weeksDoneText').textContent = `تم إنجاز ${completedWeeks} من 27 أسبوع`;
-}
-
-function weekProgress(wk) {
-  let total = 0, done = 0;
-  wk.days.forEach(d => {
-    d.lessons.forEach(l => {
-      total++;
-      if (state.progress[l.id] && state.progress[l.id].done) done++;
-    });
-  });
-  return { total, done };
-}
-
-// ── STORAGE ────────────────────────────────────────────────
 function saveProgress() {
-  try { localStorage.setItem('wsp_progress', JSON.stringify(state.progress)); } catch(e) {}
+  localStorage.setItem('wsp_progress', JSON.stringify(store.progress));
 }
 
 function loadProgress() {
-  try {
-    const raw = localStorage.getItem('wsp_progress');
-    if (raw) state.progress = JSON.parse(raw);
-  } catch(e) { state.progress = {}; }
+  const data = localStorage.getItem('wsp_progress');
+  if (data) store.progress = JSON.parse(data);
 }
 
-function resetAllProgress() {
-  if (!confirm('هل أنت متأكد من إعادة تعيين كل التقدم؟')) return;
-  state.progress = {};
-  saveProgress();
-  renderWeekDetail(SCHEDULE[state.currentWeek]);
-  updateRing();
-  renderAllWeeksGrid();
-  renderProgressPage();
-}
-
-// ── THEME ──────────────────────────────────────────────────
 function toggleTheme() {
-  const isDark = document.body.classList.toggle('dark');
-  localStorage.setItem('wsp_theme', isDark ? 'dark' : 'light');
-  document.getElementById('themeIcon').textContent  = isDark ? '🌙' : '☀️';
-  document.getElementById('themeLabel').textContent = isDark ? 'الوضع الفاتح' : 'الوضع الداكن';
-  const darkToggle = document.getElementById('darkToggle');
-  if (darkToggle) darkToggle.checked = isDark;
+  document.body.classList.toggle('dark');
 }
 
-function applyThemeFromStorage() {
-  const theme = localStorage.getItem('wsp_theme');
-  if (theme === 'dark') {
-    document.body.classList.add('dark');
-    document.getElementById('themeIcon').textContent  = '🌙';
-    document.getElementById('themeLabel').textContent = 'الوضع الفاتح';
-    const darkToggle = document.getElementById('darkToggle');
-    if (darkToggle) darkToggle.checked = true;
-  }
-}
+function loadTheme() {}
