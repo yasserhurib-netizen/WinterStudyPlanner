@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Winter Study Planner</title>
+    <title>Education Dashboard</title>
     <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
@@ -12,44 +12,59 @@
 
     <!-- Sidebar -->
     <aside class="sidebar">
-        <h2 class="logo">Study</h2>
+        <div class="logo">EduPanel</div>
 
         <nav class="menu">
-            <a href="#" class="active">Dashboard</a>
-            <a href="#">Tasks</a>
+            <a class="active" href="#">Dashboard</a>
+            <a href="#">Courses</a>
+            <a href="#">Assignments</a>
             <a href="#">Schedule</a>
-            <a href="#">Notes</a>
+            <a href="#">Progress</a>
             <a href="#">Settings</a>
         </nav>
     </aside>
 
-    <!-- Main Content -->
+    <!-- Main -->
     <main class="main">
 
-        <!-- Top Cards -->
+        <!-- Header -->
+        <header class="header">
+            <h1>Welcome Back 👋</h1>
+            <p>Your learning progress today</p>
+        </header>
+
+        <!-- Stats -->
         <section class="cards">
             <div class="card">
-                <h3>Tasks</h3>
-                <p>12</p>
+                <h3>Courses</h3>
+                <p>6</p>
+            </div>
+
+            <div class="card">
+                <h3>Assignments</h3>
+                <p>14</p>
             </div>
 
             <div class="card">
                 <h3>Completed</h3>
-                <p>5</p>
-            </div>
-
-            <div class="card">
-                <h3>Pending</h3>
-                <p>7</p>
+                <p>8</p>
             </div>
 
             <div class="card">
                 <h3>Streak</h3>
-                <p>3 days</p>
+                <p>5 days</p>
             </div>
         </section>
 
-        <!-- Week Bar -->
+        <!-- Progress Section -->
+        <section class="progress-box">
+            <h2>Weekly Progress</h2>
+            <div class="progress-bar">
+                <div style="width:70%"></div>
+            </div>
+        </section>
+
+        <!-- Week -->
         <section class="week-bar">
             <div>Mon</div>
             <div>Tue</div>
@@ -75,23 +90,23 @@
                 <tbody>
                     <tr>
                         <td>Math</td>
-                        <td>Algebra Revision</td>
+                        <td>Algebra</td>
                         <td>2h</td>
-                        <td>Done</td>
+                        <td class="done">Done</td>
                     </tr>
 
                     <tr>
                         <td>English</td>
-                        <td>Grammar Practice</td>
+                        <td>Grammar</td>
                         <td>1h</td>
-                        <td>Pending</td>
+                        <td class="pending">Pending</td>
                     </tr>
 
                     <tr>
                         <td>Science</td>
                         <td>Chapter 3</td>
                         <td>1.5h</td>
-                        <td>In Progress</td>
+                        <td class="progress">In Progress</td>
                     </tr>
                 </tbody>
             </table>
