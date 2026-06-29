@@ -1,57 +1,84 @@
 import { state } from "../core/state.js";
 
-export function openWeek(id) {
+export function openWeek(id){
 
     const week = state.weeks.find(w => w.id === id);
 
-    if (!week) return;
+    if(!week) return;
 
     const modal = document.getElementById("modal");
     const body = document.getElementById("modal-body");
 
-    let html = `<h2>📅 ${week.title}</h2>`;
+    let html = `
+        <h2>${week.title}</h2>
+        <table class="lesson-table">
+            <thead>
+                <tr>
+                    <th>الحالة</th>
+                    <th>الدرس</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
 
-    if (!week.lessons || week.lessons.length === 0) {
+    if(week.lessons && week.lessons.length){
 
-        html += `<p>لا توجد دروس.</p>`;
-
-    } else {
-
-        html += "<ul>";
-
-        week.lessons.forEach((lesson, index) => {
+        week.lessons.forEach((lesson,index)=>{
 
             html += `
-                <li>
-                    <label>
+                <tr>
+                    <td>
                         <input
                             type="checkbox"
                             ${lesson.completed ? "checked" : ""}
-                            onchange="toggleLesson(${week.id}, ${index})"
+                            onchange="toggleLesson(${week.id},${index})"
                         >
-                        ${lesson.title}
-                    </label>
-                </li>
+                    </td>
+
+                    <td>${lesson.title}</td>
+                </tr>
             `;
 
         });
 
-        html += "</ul>";
+    }else{
+
+        html += `
+            <tr>
+                <td colspan="2">
+                    لا توجد دروس
+                </td>
+            </tr>
+        `;
+
     }
+
+    html += `
+            </tbody>
+        </table>
+    `;
 
     body.innerHTML = html;
 
     modal.classList.remove("hidden");
+
 }
 
-window.closeModal = function () {
-    document.getElementById("modal").classList.add("hidden");
+window.closeModal = function(){
+
+    document
+        .getElementById("modal")
+        .classList.add("hidden");
+
 };
 
-/*
- * سيتم تنفيذها في الخطوة القادمة
- * حالياً فقط حتى لا يظهر خطأ عند الضغط على Checkbox
- */
-window.toggleLesson = function (weekId, lessonIndex) {
-    console.log("Week:", weekId, "Lesson:", lessonIndex);
+window.toggleLesson = function(weekId,lessonIndex){
+
+    console.log(
+        "Week:",
+        weekId,
+        "Lesson:",
+        lessonIndex
+    );
+
 };
