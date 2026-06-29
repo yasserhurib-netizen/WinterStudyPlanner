@@ -1,90 +1,261 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Winter Study Planner</title>
+<title>لوحة الدراسة الشتوية</title>
 
-<!-- CSS (لاحقًا نربط ملفاتك) -->
 <link rel="stylesheet" href="css/core.css">
 <link rel="stylesheet" href="css/layout.css">
 <link rel="stylesheet" href="css/components.css">
 <link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/modal.css">
 <link rel="stylesheet" href="css/animations.css">
 <link rel="stylesheet" href="css/responsive.css">
-<link rel="stylesheet" href="css/modal.css">
+
 </head>
 
 <body>
 
-<!-- APP ROOT -->
 <div id="app">
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-        <div class="brand">🎓 Winter Study Planner</div>
+    <!-- ================= Sidebar ================= -->
 
-        <div class="nav">
-            <button>🏠 Dashboard</button>
-            <button>📚 Lessons</button>
-            <button>📅 Weeks</button>
-            <button>📊 Progress</button>
-            <button>⚙️ Settings</button>
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <h2>🎓</h2>
+
+            <h3>لوحة الدراسة</h3>
+
+            <small>Winter Study Planner</small>
+
         </div>
+
+        <nav class="nav">
+
+            <button class="active">
+                🏠 الرئيسية
+            </button>
+
+            <button>
+                📚 المواد
+            </button>
+
+            <button>
+                📅 الأسابيع
+            </button>
+
+            <button>
+                📝 الاختبارات
+            </button>
+
+            <button>
+                📈 الإحصائيات
+            </button>
+
+            <button>
+                ⚙️ الإعدادات
+            </button>
+
+        </nav>
+
     </aside>
 
-    <!-- MAIN -->
+    <!-- ================= Main ================= -->
+
     <main class="main">
 
-        <!-- TOPBAR -->
-        <div class="topbar">
-            <h2>Dashboard</h2>
+        <!-- Header -->
 
-            <input type="text" placeholder="Search lessons..." class="search">
+        <header class="topbar">
 
-            <button onclick="toggleTheme()">🌙</button>
-        </div>
+            <div>
 
-        <!-- STATS (سيتم تعبئتها لاحقًا من JS) -->
-        <section class="grid grid-4" id="stats">
-            <div class="card">📚 Weeks: --</div>
-            <div class="card">📖 Lessons: --</div>
-            <div class="card">🧪 Tests: --</div>
-            <div class="card">📊 Progress: --</div>
-        </section>
+                <h2>مرحباً بك 👋</h2>
 
-        <!-- PROGRESS BAR -->
-        <section class="card">
-            <h3>Overall Progress</h3>
-            <div class="progress">
-                <div id="progress-bar"></div>
+                <p>
+                    لوحة متابعة الخطة الدراسية الشتوية
+                </p>
+
             </div>
+
+            <div>
+
+                <input
+                    class="search"
+                    type="text"
+                    placeholder="ابحث عن مادة أو درس..."
+                >
+
+            </div>
+
+        </header>
+
+        <!-- Statistics -->
+
+        <section id="stats">
+
+            <div class="card stat-card">
+
+                <span class="stat-icon">📅</span>
+
+                <h3>الأسابيع</h3>
+
+                <h2 id="weeks-count">--</h2>
+
+            </div>
+
+            <div class="card stat-card">
+
+                <span class="stat-icon">📚</span>
+
+                <h3>الدروس</h3>
+
+                <h2 id="lessons-count">--</h2>
+
+            </div>
+
+            <div class="card stat-card">
+
+                <span class="stat-icon">📝</span>
+
+                <h3>الاختبارات</h3>
+
+                <h2 id="tests-count">--</h2>
+
+            </div>
+
+            <div class="card stat-card">
+
+                <span class="stat-icon">📈</span>
+
+                <h3>الإنجاز</h3>
+
+                <h2 id="progress-percent">0%</h2>
+
+            </div>
+
         </section>
 
-        <!-- WEEKS (سنعبيها ديناميكيًا لاحقًا) -->
-        <section class="grid grid-3" id="weeks-container">
-            <!-- JS will inject weeks here -->
+        <!-- Progress -->
+
+        <section class="card progress-card">
+
+            <div class="progress-title">
+
+                <h3>نسبة الإنجاز الكلية</h3>
+
+                <span id="progress-text">0%</span>
+
+            </div>
+
+            <div class="progress">
+
+                <div id="progress-bar"></div>
+
+            </div>
+
+        </section>
+
+        <!-- Weeks -->
+
+        <section>
+
+            <h2 class="section-title">
+
+                📅 الأسابيع الدراسية
+
+            </h2>
+
+            <div id="weeks-container">
+            </div>
+
+        </section>
+
+        <!-- جدول الدروس -->
+
+        <section class="card lessons-card">
+
+            <div class="section-header">
+
+                <h2>📖 جدول الدروس</h2>
+
+                <button class="primary-btn">
+                    + إضافة درس
+                </button>
+
+            </div>
+
+            <table class="lesson-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>المادة</th>
+
+                        <th>الدرس</th>
+
+                        <th>اليوم</th>
+
+                        <th>الحالة</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="lesson-table-body">
+
+                    <tr>
+
+                        <td colspan="4">
+
+                            اختر أسبوعًا لعرض الدروس
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
         </section>
 
     </main>
 
 </div>
 
-<!-- JS (مهم جداً type="module") -->
+<!-- Modal -->
+
+<div id="modal" class="modal hidden">
+
+    <div class="modal-content">
+
+        <span class="close" onclick="closeModal()">&times;</span>
+
+        <div id="modal-body"></div>
+
+    </div>
+
+</div>
+
 <script type="module" src="js/core/app.js"></script>
 
-<!-- مؤقت: زر الثيم -->
 <script>
-function toggleTheme() {
+
+function toggleTheme(){
+
     document.body.classList.toggle("light");
+
 }
+
 </script>
-<div id="modal" class="modal hidden">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">×</span>
-        <div id="modal-body"></div>
-    </div>
-</div>
+
 </body>
+
 </html>
