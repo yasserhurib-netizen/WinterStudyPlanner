@@ -6,7 +6,7 @@
 class StateManager {
     constructor() {
         this.currentPage = 'home';
-        this.currentWeek = 1;
+        this.currentWeekId = 1; // Changed from currentWeek to currentWeekId
         this.selectedSubject = null;
         this.searchQuery = '';
         this.theme = localStorage.getItem('theme') || 'light';
@@ -25,24 +25,25 @@ class StateManager {
         this.notifyStateChange('page', page);
     }
 
-    getCurrentWeek() {
-        return this.currentWeek;
+    // Fixed: Returns ID instead of trying to return week object
+    getCurrentWeekId() {
+        return this.currentWeekId;
     }
 
     setCurrentWeek(weekId) {
-        this.currentWeek = weekId;
+        this.currentWeekId = weekId;
         this.notifyStateChange('week', weekId);
     }
 
     nextWeek() {
-        this.currentWeek++;
-        this.notifyStateChange('week', this.currentWeek);
+        this.currentWeekId++;
+        this.notifyStateChange('week', this.currentWeekId);
     }
 
     previousWeek() {
-        if (this.currentWeek > 1) {
-            this.currentWeek--;
-            this.notifyStateChange('week', this.currentWeek);
+        if (this.currentWeekId > 1) {
+            this.currentWeekId--;
+            this.notifyStateChange('week', this.currentWeekId);
         }
     }
 

@@ -7,7 +7,6 @@ class UIManager {
     constructor(stateManager, eventBus) {
         this.state = stateManager;
         this.events = eventBus;
-        this.currentWeekId = 1;
     }
 
     init() {
@@ -132,10 +131,10 @@ class UIManager {
     }
 
     renderSchedule(week) {
-        if (!week) return;
-
-        const container = document.querySelector('.lesson-table tbody');
-        if (!container) return;
+        if (!week) {
+            console.warn('No week data available');
+            return;
+        }
 
         // Get stats for this week
         const stats = this.getWeekStats(week);
@@ -192,7 +191,6 @@ class UIManager {
     }
 
     renderDay(day, weekId) {
-        const dayNames = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
         const lessonsHtml = day.lessons && day.lessons.length > 0
             ? day.lessons.map(lesson => this.renderLesson(lesson, day.id, weekId)).join('')
             : '<div class="day-content empty">لا توجد دروس</div>';
@@ -246,17 +244,7 @@ class UIManager {
     }
 
     renderSearchResults(results) {
-        // Implementation for search results
         console.log('Search results:', results);
-    }
-
-    toggleLesson(lessonId, weekId, isCompleted) {
-        console.log(`Lesson ${lessonId} in week ${weekId}: ${isCompleted ? 'completed' : 'pending'}`);
-        // Update data
-        if (window.app?.data) {
-            window.app.data.markLessonComplete(lessonId, weekId);
-            window.app.render();
-        }
     }
 
     setTheme(theme) {
@@ -275,7 +263,7 @@ class UIManager {
             'english': { name: 'English', icon: '📕', color: '#f59e0b' },
             'science': { name: 'العلوم', icon: '🔬', color: '#10b981' },
             'history': { name: 'التاريخ', icon: '📜', color: '#ef4444' },
-            'islamic': { name: 'ا��تربية الإسلامية', icon: '☪️', color: '#06b6d4' }
+            'islamic': { name: 'التربية الإسلامية', icon: '☪️', color: '#06b6d4' }
         };
         return subjects[subjectId] || { name: 'Unknown', icon: '❓', color: '#6b7280' };
     }

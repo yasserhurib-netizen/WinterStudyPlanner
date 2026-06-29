@@ -94,8 +94,10 @@ class DataManager {
 
         const lesson = this.findLesson(lessonId, weekId);
         if (lesson) {
-            lesson.status = 'completed';
+            // Toggle status
+            lesson.status = lesson.status === 'completed' ? 'pending' : 'completed';
             this.updateStats();
+            console.log(`Lesson ${lessonId} status: ${lesson.status}`);
             return true;
         }
         return false;

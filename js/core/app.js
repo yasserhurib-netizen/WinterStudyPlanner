@@ -54,30 +54,23 @@ class App {
             btn.addEventListener('click', () => this.handleNavigation(index));
         });
 
-        // Theme toggle
-        document.querySelectorAll('.theme-toggle button').forEach((btn, index) => {
-            btn.addEventListener('click', () => this.toggleTheme(index));
-        });
-
         // Search
         const searchInput = document.querySelector('.search');
         if (searchInput) {
             searchInput.addEventListener('input', (e) => this.handleSearch(e.target.value));
         }
-
-        // Week navigation
-        const prevWeekBtn = document.querySelector('.weeks-nav button:first-child');
-        const nextWeekBtn = document.querySelector('.weeks-nav button:last-child');
-        
-        if (prevWeekBtn) prevWeekBtn.addEventListener('click', () => this.previousWeek());
-        if (nextWeekBtn) nextWeekBtn.addEventListener('click', () => this.nextWeek());
     }
 
     render() {
-        const currentWeek = this.state.getCurrentWeek();
+        // Get current week ID and fetch the actual week object
+        const currentWeekId = this.state.getCurrentWeekId();
+        const weeks = this.data.getWeeks();
+        const currentWeek = weeks.find(w => w.id === currentWeekId);
+
+        // Render all components
         this.ui.renderStats(this.data.getStats());
         this.ui.renderProgress(this.data.getProgress());
-        this.ui.renderWeeks(this.data.getWeeks(), currentWeek?.id);
+        this.ui.renderWeeks(weeks, currentWeekId);
         this.ui.renderSchedule(currentWeek);
     }
 
@@ -91,25 +84,33 @@ class App {
         this.state.setCurrentPage(page);
     }
 
-    toggleTheme(mode) {
-        const isDark = mode === 1;
-        document.body.classList.toggle('dark', isDark);
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    }
-
     handleSearch(query) {
         const results = this.data.search(query);
         this.ui.renderSearchResults(results);
     }
 
     previousWeek() {
-        this.state.previousWeek();
-        this.render();
+        const currentWeekId = this.state.getCurrentWeekId();
+        if (currentWeekId > 1) {
+            this.state.setCurrentWeek(currentWeekId - 1);
+            this.render();
+        }
     }
 
     nextWeek() {
-        this.state.nextWeek();
-        this.render();
+        const weeks = this.data.getWeeks();
+        const currentWeekId = this.state.getCurrentWeekId();
+        if (currentWeekId < weeks.length) {
+            this.state.setCurrentWeek(currentWeekId + 1);
+            this.render();
+        }
+    }
+
+    toggleLesson(lessonId, weekId, isCompleted) {
+        if (this.data.markLessonComplete(lessonId, weekId)) {
+            this.render();
+            console.log(`✅ Lesson ${lessonId} updated`);
+        }
     }
 
     showError(message) {
@@ -122,7 +123,10 @@ class App {
                 <p>${message}</p>
             </div>
         `;
-        document.querySelector('.main').insertBefore(errorDiv, document.querySelector('.main').firstChild);
+        const main = document.querySelector('.main');
+        if (main) {
+            main.insertBefore(errorDiv, main.firstChild);
+        }
     }
 }
 
