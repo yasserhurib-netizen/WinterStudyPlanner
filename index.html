@@ -2,259 +2,191 @@
 <html lang="ar" dir="rtl">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة الدراسة الشتوية</title>
 
-<title>لوحة الدراسة الشتوية</title>
-
-<link rel="stylesheet" href="css/core.css">
-<link rel="stylesheet" href="css/layout.css">
-<link rel="stylesheet" href="css/components.css">
-<link rel="stylesheet" href="css/dashboard.css">
-<link rel="stylesheet" href="css/modal.css">
-<link rel="stylesheet" href="css/animations.css">
-<link rel="stylesheet" href="css/responsive.css">
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/core.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
 
 </head>
 
 <body>
 
-<div id="app">
+    <div id="app">
 
-    <!-- ================= Sidebar ================= -->
+        <!-- ================= Sidebar ================= -->
 
-    <aside class="sidebar">
+        <aside class="sidebar">
 
-        <div class="brand">
-
-            <h2>🎓</h2>
-
-            <h3>لوحة الدراسة</h3>
-
-            <small>Winter Study Planner</small>
-
-        </div>
-
-        <nav class="nav">
-
-            <button class="active">
-                🏠 الرئيسية
-            </button>
-
-            <button>
-                📚 المواد
-            </button>
-
-            <button>
-                📅 الأسابيع
-            </button>
-
-            <button>
-                📝 الاختبارات
-            </button>
-
-            <button>
-                📈 الإحصائيات
-            </button>
-
-            <button>
-                ⚙️ الإعدادات
-            </button>
-
-        </nav>
-
-    </aside>
-
-    <!-- ================= Main ================= -->
-
-    <main class="main">
-
-        <!-- Header -->
-
-        <header class="topbar">
-
-            <div>
-
-                <h2>مرحباً بك 👋</h2>
-
-                <p>
-                    لوحة متابعة الخطة الدراسية الشتوية
-                </p>
-
+            <div class="brand">
+                <h2>🎓</h2>
+                <h3>لوحة الدراسة</h3>
+                <small>Winter Study Planner</small>
             </div>
 
-            <div>
+            <nav class="nav">
+                <button class="active">
+                    🏠 الرئيسية
+                </button>
+                <button>
+                    📅 الأسابيع
+                </button>
+                <button>
+                    📈 نسبة الإنجاز
+                </button>
+                <button>
+                    📚 المواد
+                </button>
+                <button>
+                    📝 الاختبارات
+                </button>
+                <button>
+                    🔄 المراجعة
+                </button>
+                <button>
+                    ⚙️ الإعدادات
+                </button>
+            </nav>
 
+        </aside>
+
+        <!-- ================= Main ================= -->
+
+        <main class="main">
+
+            <!-- Header -->
+            <header class="topbar">
+                <div>
+                    <h2>مرحباً بك 👋</h2>
+                    <p>لوحة متابعة الخطة الدراسية الشتوية للتاسع 2027</p>
+                </div>
                 <input
                     class="search"
                     type="text"
                     placeholder="ابحث عن مادة أو درس..."
                 >
-
-            </div>
-
-        </header>
-
-        <!-- Statistics -->
-
-        <section id="stats">
-
-            <div class="card stat-card">
-
-                <span class="stat-icon">📅</span>
-
-                <h3>الأسابيع</h3>
-
-                <h2 id="weeks-count">--</h2>
-
-            </div>
-
-            <div class="card stat-card">
-
-                <span class="stat-icon">📚</span>
-
-                <h3>الدروس</h3>
-
-                <h2 id="lessons-count">--</h2>
-
-            </div>
-
-            <div class="card stat-card">
-
-                <span class="stat-icon">📝</span>
-
-                <h3>الاختبارات</h3>
-
-                <h2 id="tests-count">--</h2>
-
-            </div>
-
-            <div class="card stat-card">
-
-                <span class="stat-icon">📈</span>
-
-                <h3>الإنجاز</h3>
-
-                <h2 id="progress-percent">0%</h2>
-
-            </div>
-
-        </section>
-
-        <!-- Progress -->
-
-        <section class="card progress-card">
-
-            <div class="progress-title">
-
-                <h3>نسبة الإنجاز الكلية</h3>
-
-                <span id="progress-text">0%</span>
-
-            </div>
-
-            <div class="progress">
-
-                <div id="progress-bar"></div>
-
-            </div>
-
-        </section>
-
-        <!-- Weeks -->
-
-        <section>
-
-            <h2 class="section-title">
-
-                📅 الأسابيع الدراسية
-
-            </h2>
-
-            <div id="weeks-container">
-            </div>
-
-        </section>
-
-        <!-- جدول الدروس -->
-
-        <section class="card lessons-card">
-
-            <div class="section-header">
-
-                <h2>📖 جدول الدروس</h2>
-
-                <button class="primary-btn">
-                    + إضافة درس
-                </button>
-
-            </div>
-
-            <table class="lesson-table">
-
-                <thead>
-
-                    <tr>
-
-                        <th>المادة</th>
-
-                        <th>الدرس</th>
-
-                        <th>اليوم</th>
-
-                        <th>الحالة</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody id="lesson-table-body">
-
-                    <tr>
-
-                        <td colspan="4">
-
-                            اختر أسبوعًا لعرض الدروس
-
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </section>
-
-    </main>
-
-</div>
-
-<!-- Modal -->
-
-<div id="modal" class="modal hidden">
-
-    <div class="modal-content">
-
-        <span class="close" onclick="closeModal()">&times;</span>
-
-        <div id="modal-body"></div>
+            </header>
+
+            <!-- Statistics -->
+            <section id="stats">
+            </section>
+
+            <!-- Progress -->
+            <section class="card progress-card">
+                <div class="progress-title">
+                    <h3>نسبة الإنجاز الكلية</h3>
+                    <span id="progress-text">0%</span>
+                </div>
+                <div class="progress">
+                    <div id="progress-bar"></div>
+                </div>
+            </section>
+
+            <!-- Weeks -->
+            <section>
+                <div id="weeks-container"></div>
+            </section>
+
+            <!-- جدول الدروس -->
+            <section class="card lessons-card">
+                <div class="section-header">
+                    <h2>📖 جدول الدروس</h2>
+                    <button class="primary-btn">
+                        + إضافة درس
+                    </button>
+                </div>
+
+                <table class="lesson-table">
+                    <thead>
+                        <tr>
+                            <th>المادة</th>
+                            <th>الدرس</th>
+                            <th>اليوم</th>
+                            <th>الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lesson-table-body">
+                        <tr>
+                            <td colspan="4">
+                                جاري التحميل...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+        </main>
 
     </div>
 
-</div>
+    <!-- Modal -->
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
 
-<script type="module" src="js/core/app.js"></script>
+    <!-- Main App Script -->
+    <script type="module" src="js/core/app.js"></script>
 
-<script>
+    <!-- Utility Scripts -->
+    <script>
+        /**
+         * Global Helper Functions
+         */
 
-function toggleTheme(){
+        // Close modal
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+        }
 
-    document.body.classList.toggle("light");
+        // Open modal
+        function openModal(content) {
+            const modal = document.getElementById('modal');
+            const modalBody = document.getElementById('modal-body');
+            if (modal && modalBody) {
+                modalBody.innerHTML = content;
+                modal.classList.remove('hidden');
+            }
+        }
 
-}
+        // Close modal on background click
+        document.addEventListener('click', function (event) {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
 
-</script>
+        // Initialize theme from localStorage
+        document.addEventListener('DOMContentLoaded', function () {
+            const theme = localStorage.getItem('theme') || 'light';
+            if (theme === 'dark') {
+                document.body.classList.add('dark');
+            }
+        });
+
+        // Prevent zoom on double tap
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+    </script>
 
 </body>
 
