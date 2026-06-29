@@ -471,7 +471,9 @@ const SCHEDULE = [
   }))
 /* ========================= WEEK 7 → 27 ========================= */
 
-Array.from({ length: 21 }, (_, i) => {
+/* ========================= WEEK 7 → 27 ========================= */
+
+const WEEK_7_TO_27 = Array.from({ length: 21 }, (_, i) => {
   const w = i + 7;
 
   return {
@@ -546,4 +548,7 @@ Array.from({ length: 21 }, (_, i) => {
 })
   
 ];
-
+const SCHEDULE = [
+  ...existingWeeks,   // إذا عندك الأسابيع 1–6
+  ...WEEK_7_TO_27
+];
