@@ -468,7 +468,7 @@ const SCHEDULE = [
         ]
       },
     ]
-  }))
+
 /* ========================= WEEK 7 → 27 ========================= */
 const WEEK_7_TO_27 = Array.from({ length: 21 }, (_, i) => {
   const w = i + 7;
