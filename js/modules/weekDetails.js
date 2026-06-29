@@ -3,55 +3,27 @@ import { state } from "../core/state.js";
 export function openWeek(id) {
 
     const week = state.weeks.find(w => w.id === id);
-
-    if (!week) return;
-
     const modal = document.getElementById("modal");
     const body = document.getElementById("modal-body");
 
-    let html = `<h2>📅 ${week.title}</h2>`;
+    if (!week) return;
 
-    if (!week.lessons || week.lessons.length === 0) {
+    let html = `<h2>📅 ${week.title}</h2><ul>`;
 
-        html += `<p>لا توجد دروس.</p>`;
-
+    if (week.lessons.length === 0) {
+        html += "<li>لا توجد دروس</li>";
     } else {
-
-        html += "<ul>";
-
-        week.lessons.forEach((lesson, index) => {
-
-            html += `
-                <li>
-                    <label>
-                        <input
-                            type="checkbox"
-                            ${lesson.completed ? "checked" : ""}
-                            onchange="toggleLesson(${week.id}, ${index})"
-                        >
-                        ${lesson.title}
-                    </label>
-                </li>
-            `;
-
+        week.lessons.forEach(l => {
+            html += `<li>${l.completed ? "✔" : "❌"} ${l.title}</li>`;
         });
-
-        html += "</ul>";
     }
 
-    body.innerHTML = html;
+    html += "</ul>";
 
+    body.innerHTML = html;
     modal.classList.remove("hidden");
 }
 
 window.closeModal = function () {
     document.getElementById("modal").classList.add("hidden");
-};
-
-/*
- * سيتم تنفيذها في الخطوة القادمة
- * حالياً فقط حتى لا يظهر خطأ عند الضغط على Checkbox
- */
-window.toggleLesson = function (weekId, lessonIndex) {
-    console.log("Week:", weekId, "Lesson:", lessonIndex);
 };
