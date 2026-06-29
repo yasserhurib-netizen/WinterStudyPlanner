@@ -3,27 +3,18 @@ import { state } from "../core/state.js";
 export function openWeek(id) {
 
     const week = state.weeks.find(w => w.id === id);
-    const modal = document.getElementById("modal");
-    const body = document.getElementById("modal-body");
 
     if (!week) return;
 
-    let html = `<h2>📅 ${week.title}</h2><ul>`;
+    let content = `📅 ${week.title}\n\n`;
 
     if (week.lessons.length === 0) {
-        html += "<li>لا توجد دروس</li>";
+        content += "لا توجد دروس بعد";
     } else {
         week.lessons.forEach(l => {
-            html += `<li>${l.completed ? "✔" : "❌"} ${l.title}</li>`;
+            content += `- ${l.title} ${l.completed ? "✔" : "❌"}\n`;
         });
     }
 
-    html += "</ul>";
-
-    body.innerHTML = html;
-    modal.classList.remove("hidden");
+    alert(content);
 }
-
-window.closeModal = function () {
-    document.getElementById("modal").classList.add("hidden");
-};
