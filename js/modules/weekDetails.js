@@ -17,26 +17,26 @@ export function openWeek(id) {
 
     } else {
 
-     html += "<ul>";
+        html += "<ul>";
 
-week.lessons.forEach((lesson, index) => {
+        week.lessons.forEach((lesson, index) => {
 
-    html += `
-        <li>
-            <label>
-                <input
-                    type="checkbox"
-                    ${lesson.completed ? "checked" : ""}
-                    onchange="toggleLesson(${week.id}, ${index})"
-                >
-                ${lesson.title}
-            </label>
-        </li>
-    `;
+            html += `
+                <li>
+                    <label>
+                        <input
+                            type="checkbox"
+                            ${lesson.completed ? "checked" : ""}
+                            onchange="toggleLesson(${week.id}, ${index})"
+                        >
+                        ${lesson.title}
+                    </label>
+                </li>
+            `;
 
-});
+        });
 
-html += "</ul>"; 
+        html += "</ul>";
     }
 
     body.innerHTML = html;
@@ -46,4 +46,12 @@ html += "</ul>";
 
 window.closeModal = function () {
     document.getElementById("modal").classList.add("hidden");
+};
+
+/*
+ * سيتم تنفيذها في الخطوة القادمة
+ * حالياً فقط حتى لا يظهر خطأ عند الضغط على Checkbox
+ */
+window.toggleLesson = function (weekId, lessonIndex) {
+    console.log("Week:", weekId, "Lesson:", lessonIndex);
 };
