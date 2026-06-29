@@ -1,90 +1,105 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Winter Study Planner</title>
-
-<!-- CSS (لاحقًا نربط ملفاتك) -->
-<link rel="stylesheet" href="css/core.css">
-<link rel="stylesheet" href="css/layout.css">
-<link rel="stylesheet" href="css/components.css">
-<link rel="stylesheet" href="css/dashboard.css">
-<link rel="stylesheet" href="css/animations.css">
-<link rel="stylesheet" href="css/responsive.css">
-<link rel="stylesheet" href="css/modal.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winter Study Planner</title>
+    <link rel="stylesheet" href="css/dashboard.css">
 </head>
-
 <body>
 
-<!-- APP ROOT -->
-<div id="app">
+<div class="app">
 
-    <!-- SIDEBAR -->
+    <!-- Sidebar -->
     <aside class="sidebar">
-        <div class="brand">🎓 Winter Study Planner</div>
+        <h2 class="logo">Study</h2>
 
-        <div class="nav">
-            <button>🏠 Dashboard</button>
-            <button>📚 Lessons</button>
-            <button>📅 Weeks</button>
-            <button>📊 Progress</button>
-            <button>⚙️ Settings</button>
-        </div>
+        <nav class="menu">
+            <a href="#" class="active">Dashboard</a>
+            <a href="#">Tasks</a>
+            <a href="#">Schedule</a>
+            <a href="#">Notes</a>
+            <a href="#">Settings</a>
+        </nav>
     </aside>
 
-    <!-- MAIN -->
+    <!-- Main Content -->
     <main class="main">
 
-        <!-- TOPBAR -->
-        <div class="topbar">
-            <h2>Dashboard</h2>
+        <!-- Top Cards -->
+        <section class="cards">
+            <div class="card">
+                <h3>Tasks</h3>
+                <p>12</p>
+            </div>
 
-            <input type="text" placeholder="Search lessons..." class="search">
+            <div class="card">
+                <h3>Completed</h3>
+                <p>5</p>
+            </div>
 
-            <button onclick="toggleTheme()">🌙</button>
-        </div>
+            <div class="card">
+                <h3>Pending</h3>
+                <p>7</p>
+            </div>
 
-        <!-- STATS (سيتم تعبئتها لاحقًا من JS) -->
-        <section class="grid grid-4" id="stats">
-            <div class="card">📚 Weeks: --</div>
-            <div class="card">📖 Lessons: --</div>
-            <div class="card">🧪 Tests: --</div>
-            <div class="card">📊 Progress: --</div>
-        </section>
-
-        <!-- PROGRESS BAR -->
-        <section class="card">
-            <h3>Overall Progress</h3>
-            <div class="progress">
-                <div id="progress-bar"></div>
+            <div class="card">
+                <h3>Streak</h3>
+                <p>3 days</p>
             </div>
         </section>
 
-        <!-- WEEKS (سنعبيها ديناميكيًا لاحقًا) -->
-        <section class="grid grid-3" id="weeks-container">
-            <!-- JS will inject weeks here -->
+        <!-- Week Bar -->
+        <section class="week-bar">
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+            <div>Sun</div>
+        </section>
+
+        <!-- Table -->
+        <section class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Task</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Math</td>
+                        <td>Algebra Revision</td>
+                        <td>2h</td>
+                        <td>Done</td>
+                    </tr>
+
+                    <tr>
+                        <td>English</td>
+                        <td>Grammar Practice</td>
+                        <td>1h</td>
+                        <td>Pending</td>
+                    </tr>
+
+                    <tr>
+                        <td>Science</td>
+                        <td>Chapter 3</td>
+                        <td>1.5h</td>
+                        <td>In Progress</td>
+                    </tr>
+                </tbody>
+            </table>
         </section>
 
     </main>
 
 </div>
 
-<!-- JS (مهم جداً type="module") -->
-<script type="module" src="js/core/app.js"></script>
-
-<!-- مؤقت: زر الثيم -->
-<script>
-function toggleTheme() {
-    document.body.classList.toggle("light");
-}
-</script>
-<div id="modal" class="modal hidden">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">×</span>
-        <div id="modal-body"></div>
-    </div>
-</div>
 </body>
 </html>
