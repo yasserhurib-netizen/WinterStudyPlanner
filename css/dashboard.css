@@ -1,20 +1,58 @@
 /* =========================
-   Base Layout
+   GLOBAL
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #0f0f1a;
+    color: #fff;
+}
+
+/* =========================
+   LAYOUT
 ========================= */
 
 .app {
     display: flex;
     height: 100vh;
-    font-family: Arial, sans-serif;
-    background: #0f0f1a;
-    color: #fff;
 }
 
+/* =========================
+   SIDEBAR
+========================= */
+
 .sidebar {
-    width: 260px;
+    width: 240px;
     background: #151528;
     padding: 20px;
 }
+
+.logo {
+    margin-bottom: 30px;
+}
+
+.menu a {
+    display: block;
+    color: #aaa;
+    text-decoration: none;
+    padding: 10px 0;
+    transition: 0.2s;
+}
+
+.menu a:hover,
+.menu a.active {
+    color: #fff;
+}
+
+/* =========================
+   MAIN
+========================= */
 
 .main {
     flex: 1;
@@ -23,10 +61,10 @@
 }
 
 /* =========================
-   Dashboard Cards
+   CARDS
 ========================= */
 
-.dashboard-cards {
+.cards {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 15px;
@@ -37,8 +75,7 @@
     background: #1e1e2f;
     padding: 20px;
     border-radius: 12px;
-    text-align: center;
-    transition: 0.2s ease;
+    transition: 0.2s;
 }
 
 .card:hover {
@@ -46,19 +83,18 @@
 }
 
 .card h3 {
-    margin: 0;
     font-size: 14px;
     color: #aaa;
 }
 
 .card p {
-    margin: 10px 0 0;
     font-size: 22px;
+    margin-top: 10px;
     font-weight: bold;
 }
 
 /* =========================
-   Weekly Bar
+   WEEK BAR
 ========================= */
 
 .week-bar {
@@ -68,45 +104,41 @@
     overflow-x: auto;
 }
 
-.week-day {
-    flex: 1;
-    min-width: 80px;
+.week-bar div {
     background: #1e1e2f;
-    padding: 10px;
+    padding: 10px 15px;
     border-radius: 10px;
+    min-width: 70px;
     text-align: center;
     cursor: pointer;
     transition: 0.2s;
 }
 
-.week-day:hover {
+.week-bar div:hover {
     background: #2a2a40;
 }
 
 /* =========================
-   Table
+   TABLE
 ========================= */
 
 .table-container {
     background: #1e1e2f;
     padding: 15px;
     border-radius: 12px;
-    overflow-x: auto;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    color: #fff;
 }
 
-table th,
-table td {
+th, td {
     padding: 12px;
-    border-bottom: 1px solid #2a2a40;
     text-align: left;
+    border-bottom: 1px solid #2a2a40;
 }
 
-table th {
+th {
     color: #aaa;
 }
