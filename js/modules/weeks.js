@@ -10,7 +10,7 @@ export function renderWeeks() {
 
     container.innerHTML = "";
 
-    state.weeks.forEach(week => {
+    state.weeks.forEach((week) => {
 
         const card = createWeekCard(week);
 
@@ -24,3 +24,5 @@ export function renderWeeks() {
 
     console.log("Weeks rendered ✔");
 }
+
+window.state = state;
