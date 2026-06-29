@@ -1,29 +1,13 @@
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background: #111827;
-    padding: 20px;
+.card {
+    background: var(--panel);
+    padding: 15px;
     border-radius: 12px;
-    width: 400px;
-    color: white;
+    margin-bottom: 10px;
 }
 
-.hidden {
-    display: none;
-}
-
-.close {
-    float: left;
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 20px;
 }
