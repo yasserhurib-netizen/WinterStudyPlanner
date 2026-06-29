@@ -1,87 +1,349 @@
-/* ===========================
-   Animations
-=========================== */
+/* ==================== Animations & Transitions ==================== */
 
-@keyframes fadeIn{
-
-    from{
-        opacity:0;
-        transform:translateY(20px);
+/* Fade */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
     }
-
-    to{
-        opacity:1;
-        transform:translateY(0);
+    to {
+        opacity: 1;
     }
-
 }
 
-@keyframes slideRight{
-
-    from{
-        opacity:0;
-        transform:translateX(-30px);
+@keyframes fadeOut {
+    from {
+        opacity: 1;
     }
-
-    to{
-        opacity:1;
-        transform:translateX(0);
+    to {
+        opacity: 0;
     }
-
 }
 
-@keyframes zoomIn{
+.fade-in {
+    animation: fadeIn var(--transition-base);
+}
 
-    from{
-        opacity:0;
-        transform:scale(.9);
+.fade-out {
+    animation: fadeOut var(--transition-base);
+}
+
+/* Slide */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
     }
-
-    to{
-        opacity:1;
-        transform:scale(1);
+    to {
+        transform: translateX(0);
+        opacity: 1;
     }
-
 }
 
-.sidebar{
-
-    animation:slideRight .5s ease;
-
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
-.topbar{
-
-    animation:fadeIn .5s ease;
-
+@keyframes slideInUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
-.card{
-
-    animation:fadeIn .6s ease;
-
+@keyframes slideInDown {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
-.modal-content{
-
-    animation:zoomIn .25s ease;
-
+.slide-in-right {
+    animation: slideInRight var(--transition-base);
 }
 
-button{
-
-    transition:.25s;
-
+.slide-in-left {
+    animation: slideInLeft var(--transition-base);
 }
 
-button:hover{
-
-    transform:translateY(-2px);
-
+.slide-in-up {
+    animation: slideInUp var(--transition-base);
 }
 
-.card:hover{
+.slide-in-down {
+    animation: slideInDown var(--transition-base);
+}
 
-    transform:translateY(-5px);
+/* Bounce */
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
 
+.bounce-in {
+    animation: bounceIn var(--transition-base);
+}
+
+/* Pulse */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Scale */
+@keyframes scaleIn {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.scale-in {
+    animation: scaleIn var(--transition-base);
+}
+
+/* Wiggle */
+@keyframes wiggle {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-2deg);
+    }
+    75% {
+        transform: rotate(2deg);
+    }
+}
+
+.wiggle {
+    animation: wiggle 200ms;
+}
+
+/* Shake */
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+.shake {
+    animation: shake 200ms;
+}
+
+/* Glow */
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(91, 110, 255, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(91, 110, 255, 0.6);
+    }
+}
+
+.glow {
+    animation: glow 2s ease-in-out infinite;
+}
+
+/* Flip */
+@keyframes flipIn {
+    from {
+        transform: perspective(400px) rotateY(90deg);
+        opacity: 0;
+    }
+    to {
+        transform: perspective(400px) rotateY(0deg);
+        opacity: 1;
+    }
+}
+
+.flip-in {
+    animation: flipIn var(--transition-slow);
+}
+
+/* Rotate */
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.rotate {
+    animation: rotate 2s linear infinite;
+}
+
+/* Progress Animation */
+@keyframes progressFill {
+    from {
+        width: 0;
+    }
+}
+
+.progress-animate {
+    animation: progressFill 1s ease-out forwards;
+}
+
+/* Shimmer (Skeleton Loading) */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.shimmer {
+    background: linear-gradient(
+        90deg,
+        var(--gray-200) 25%,
+        var(--gray-100) 50%,
+        var(--gray-200) 75%
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+}
+
+body.dark .shimmer {
+    background: linear-gradient(
+        90deg,
+        var(--gray-800) 25%,
+        var(--gray-700) 50%,
+        var(--gray-800) 75%
+    );
+}
+
+/* Page Transition */
+.page-transition {
+    animation: fadeIn var(--transition-base);
+}
+
+/* Hover Effects */
+.hover-lift {
+    transition: all var(--transition-fast);
+}
+
+.hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.hover-scale {
+    transition: transform var(--transition-fast);
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+
+.hover-color {
+    transition: color var(--transition-fast);
+}
+
+.hover-color:hover {
+    color: var(--primary);
+}
+
+.hover-bg {
+    transition: background-color var(--transition-fast);
+}
+
+.hover-bg:hover {
+    background-color: var(--secondary);
+}
+
+/* Text Animation */
+@keyframes textSparkle {
+    0% {
+        color: var(--gray-800);
+    }
+    50% {
+        color: var(--primary);
+    }
+    100% {
+        color: var(--gray-800);
+    }
+}
+
+.text-sparkle {
+    animation: textSparkle 1s ease-in-out;
+}
+
+/* Loading Animation */
+@keyframes loadingDots {
+    0%, 20% {
+        content: '.';
+    }
+    40% {
+        content: '..';
+    }
+    60%, 100% {
+        content: '...';
+    }
+}
+
+.loading-text::after {
+    content: '';
+    animation: loadingDots 1.5s steps(4, end) infinite;
+}
+
+/* Gradient Animation */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.gradient-animate {
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite;
 }
