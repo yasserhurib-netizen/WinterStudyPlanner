@@ -1,29 +1,29 @@
 .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .modal-content {
-    background: #111827;
-    padding: 20px;
-    border-radius: 12px;
-    width: 400px;
-    color: white;
+    background: #111827;
+    padding: 20px;
+    border-radius: 12px;
+    width: 400px;
+    color: white;
 }
 
 .hidden {
-    display: none;
+    display: none;
 }
 
 .close {
-    float: left;
-    cursor: pointer;
-    font-size: 20px;
+    float: left;
+    cursor: pointer;
+    font-size: 20px;
 }
