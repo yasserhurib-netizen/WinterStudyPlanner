@@ -8,11 +8,11 @@ export function openWeek(id) {
 
     let content = `📅 ${week.title}\n\n`;
 
-    if (week.lessons.length === 0) {
-        content += "لا توجد دروس بعد";
+    if (!week.lessons || week.lessons.length === 0) {
+        content += "لا توجد دروس";
     } else {
-        week.lessons.forEach(l => {
-            content += `- ${l.title} ${l.completed ? "✔" : "❌"}\n`;
+        week.lessons.forEach(lesson => {
+            content += `• ${lesson.title}\n`;
         });
     }
 
