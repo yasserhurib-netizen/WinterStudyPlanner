@@ -5,9 +5,9 @@ export function createWeekCard(week) {
     card.className = "card";
 
     card.innerHTML = `
-        <h3>📅 ${week.title}</h3>
+        <h3>${week.title}</h3>
 
-        <p>التقدم: ${week.progress}%</p>
+        <p>التقدم ${week.progress}%</p>
 
         <div class="progress">
             <div style="width:${week.progress}%"></div>
