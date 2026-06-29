@@ -1,11 +1,17 @@
 import { state } from "./state.js";
 
-export async function loadData() {
-    const res = await fetch("./data/plan.json");
-    const data = await res.json();
+export async function loadData(){
 
-    state.weeks = data.weeks;
-    state.meta = data.meta;
+    const response = await fetch("data/plan.json");
 
-    console.log("Data Loaded", state);
+    const data = await response.json();
+
+    state.weeks = data.weeks || [];
+
+    state.tests = data.tests || [];
+
+    state.settings = data.settings || {};
+
+    console.log("Data Loaded ✔");
+
 }
