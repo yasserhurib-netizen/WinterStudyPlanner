@@ -6,15 +6,33 @@ export function openWeek(id) {
 
     if (!week) return;
 
-    let content = 📅 ${week.title}\n\n;
+    const modal = document.getElementById("modal");
+    const body = document.getElementById("modal-body");
 
-    if (week.lessons.length === 0) {
-        content += "لا توجد دروس بعد";
+    let html = `<h2>📅 ${week.title}</h2>`;
+
+    if (!week.lessons || week.lessons.length === 0) {
+
+        html += `<p>لا توجد دروس.</p>`;
+
     } else {
-        week.lessons.forEach(l => {
-            content += - ${l.title} ${l.completed ? "✔" : "❌"}\n;
+
+        html += "<ul>";
+
+        week.lessons.forEach(lesson => {
+
+            html += `<li>${lesson.completed ? "✅" : "⬜"} ${lesson.title}</li>`;
+
         });
+
+        html += "</ul>";
     }
 
-    alert(content);
+    body.innerHTML = html;
+
+    modal.classList.remove("hidden");
 }
+
+window.closeModal = function () {
+    document.getElementById("modal").classList.add("hidden");
+};
