@@ -18,7 +18,7 @@ function initApp() {
   loadTheme();
 
   UI.initNavigation();
- renderWeekTabs();
+   renderWeekTabs();
   UI.renderAllPages();
 
   Week.select(0);
