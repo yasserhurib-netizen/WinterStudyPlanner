@@ -1,12 +1,111 @@
-:root {
-    --bg: #0a0f1c;
-    --text: #e5e7eb;
-    --panel: rgba(255,255,255,0.05);
+:root{
+
+    --primary:#5568ff;
+    --primary-dark:#3348d6;
+
+    --secondary:#6c63ff;
+
+    --success:#34c759;
+
+    --background:#f5f7fd;
+
+    --panel:#ffffff;
+
+    --text:#1d2d5c;
+
+    --text-light:#6d7895;
+
+    --border:#e8edf7;
+
+    --shadow:0 12px 30px rgba(0,0,0,.08);
+
+    --radius:20px;
+
 }
 
-body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: system-ui;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:
+    "Cairo",
+    "Segoe UI",
+    Tahoma,
+    sans-serif;
+
+    direction:rtl;
+
+    background:var(--background);
+
+    color:var(--text);
+
+}
+
+a{
+
+    text-decoration:none;
+
+    color:inherit;
+
+}
+
+img{
+
+    max-width:100%;
+
+}
+
+ul{
+
+    list-style:none;
+
+}
+
+input,
+button,
+select,
+textarea{
+
+    font-family:inherit;
+
+}
+
+.hidden{
+
+    display:none !important;
+
+}
+
+.grid{
+
+    display:grid;
+
+    gap:20px;
+
+}
+
+.grid-2{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+.grid-3{
+
+    grid-template-columns:repeat(3,1fr);
+
+}
+
+.grid-4{
+
+    grid-template-columns:repeat(4,1fr);
+
 }
