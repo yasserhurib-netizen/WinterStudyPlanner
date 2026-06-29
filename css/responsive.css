@@ -1,9 +1,79 @@
-@media (max-width: 768px) {
-    .sidebar {
-        display: none;
+/* ===========================
+   Laptop
+=========================== */
+
+@media (max-width:1200px){
+
+    #stats{
+        grid-template-columns:repeat(2,1fr);
     }
 
-    .app {
-        flex-direction: column;
+    #weeks-container{
+        grid-template-columns:repeat(2,1fr);
     }
+
+}
+
+/* ===========================
+   Tablet
+=========================== */
+
+@media (max-width:900px){
+
+    #app{
+        flex-direction:column;
+    }
+
+    .sidebar{
+        width:100%;
+    }
+
+    .topbar{
+        padding:20px;
+    }
+
+    .search{
+        width:100%;
+        margin-top:15px;
+    }
+
+    #weeks-container{
+        grid-template-columns:1fr;
+    }
+
+    .lesson-table{
+        display:block;
+        overflow-x:auto;
+    }
+
+}
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media (max-width:600px){
+
+    .main{
+        padding:15px;
+    }
+
+    #stats{
+        grid-template-columns:1fr;
+    }
+
+    .topbar h2{
+        font-size:28px;
+    }
+
+    .section-header{
+        flex-direction:column;
+        gap:15px;
+        align-items:flex-start;
+    }
+
+    .primary-btn{
+        width:100%;
+    }
+
 }
